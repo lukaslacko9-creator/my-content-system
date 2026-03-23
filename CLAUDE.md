@@ -7,7 +7,9 @@ A content design system based on Tesco's Blueberry design system principles. All
 ## Project Structure
 
 - `skills/` — Custom skills for content workflows
-  - `tone-checker.md` — Validates tone and voice consistency
+  - `content-checker.md` — 10-step content review against all Blueberry rules (auto-activates on content edits)
+  - `copy-creator.md` — 10-step guided content creation with full brief output
+  - `tone-checker.md` — Quick-reference checklist (legacy, superseded by content-checker)
   - `learn.md` — Captures learnings and patterns from content reviews
 - `memory.md` — Persistent context and decisions
 
@@ -708,6 +710,7 @@ Content design is the practice of shaping information so people can find it, und
 ## Conventions
 
 - All content should follow the principles and rules defined above
-- Use `skills/tone-checker.md` to validate content against these guidelines
+- Use `skills/content-checker.md` (10-step review) to validate any content against these guidelines — this activates automatically when content is written or edited
+- Use `skills/copy-creator.md` (10-step creation) to create new content with full brief output
 - Use `skills/learn.md` to document patterns discovered during content work
 - Keep `memory.md` updated with key decisions and context
