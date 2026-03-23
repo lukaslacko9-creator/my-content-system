@@ -1,0 +1,4 @@
+.obsidian/
+.env*.local
+.playwright-mcp/
+.claude/
