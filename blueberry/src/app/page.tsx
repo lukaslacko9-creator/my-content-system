@@ -63,11 +63,11 @@ export default function Home() {
               <img src="/Blueberry-logo.png" alt="Blueberry" className="h-16 w-16 object-contain" />
             </div>
             <h2 className="mb-2 text-lg font-semibold">
-              Check, create, or transcreate English content for CE
+              Check, create or transcreate English content for CE
             </h2>
             <p className="mb-8 max-w-md text-center text-sm text-muted-foreground">
-              Check copy against Blueberry rules, create new content,
-              or transcreate from Slovak, Czech, and Hungarian.
+              Check copy against Blueberry rules, create new content
+              or transcreate from Slovak, Czech and Hungarian.
             </p>
 
             {/* Chat input centered */}
