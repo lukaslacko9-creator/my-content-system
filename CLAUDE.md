@@ -9,6 +9,7 @@ A content design system based on Tesco's Blueberry design system principles. All
 - `skills/` — Custom skills for content workflows
   - `content-checker.md` — 10-step content review against all Blueberry rules (auto-activates on content edits)
   - `copy-creator.md` — 10-step guided content creation with full brief output
+  - `transcreator.md` — 8-step transcreation from Slovak, Czech, and Hungarian into sign-off-ready English
   - `tone-checker.md` — Quick-reference checklist (legacy, superseded by content-checker)
   - `learn.md` — Captures learnings and patterns from content reviews
 - `memory.md` — Persistent context and decisions
