@@ -31,7 +31,7 @@ export default function Home() {
           <div className="text-left">
             <h1 className="text-sm font-semibold tracking-tight">Blueberry</h1>
             <p className="text-xs text-muted-foreground">
-              Content Design Checker
+              CE content design assistant
             </p>
           </div>
         </button>
@@ -63,11 +63,11 @@ export default function Home() {
               <img src="/Blueberry-logo.png" alt="Blueberry" className="h-16 w-16 object-contain" />
             </div>
             <h2 className="mb-2 text-lg font-semibold">
-              Check or create English Tesco content for CE
+              Check, create, or transcreate English content for CE
             </h2>
             <p className="mb-8 max-w-md text-center text-sm text-muted-foreground">
-              Paste copy to check against Blueberry rules, upload a screenshot,
-              or describe what you need and I&apos;ll create it.
+              Check copy against Blueberry rules, create new content,
+              or transcreate from Slovak, Czech, and Hungarian.
             </p>
 
             {/* Chat input centered */}
@@ -80,7 +80,7 @@ export default function Home() {
               <p className="mb-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Suggestions
               </p>
-              <div className="grid gap-2 sm:grid-cols-3">
+              <div className="grid gap-2 sm:grid-cols-4">
                 <SuggestionCard
                   onClick={() =>
                     sendMessage(
@@ -107,6 +107,15 @@ export default function Home() {
                   }
                   label="Create a success"
                   example="Delivery slot booked"
+                />
+                <SuggestionCard
+                  onClick={() =>
+                    sendMessage(
+                      'Transcreate this Slovak button copy to English: "Kliknite sem pre prihlásenie do vášho profilu"'
+                    )
+                  }
+                  label="Transcreate from CE"
+                  example="Slovak, Czech, or Hungarian to English"
                 />
               </div>
             </div>
