@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Blueberry — Content Design Checker",
+  title: "Blueberry — CE content design assistant",
   description:
-    "Check and create Tesco content following the Blueberry design system",
+    "Check, create or transcreate English Tesco content for CE from Slovak, Czech and Hungarian",
 };
 
 export default function RootLayout({
