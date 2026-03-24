@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between border-b border-border px-6 py-3">
+      <header className="flex items-center justify-between border-b border-border px-4 py-3 sm:px-6">
         <button
           onClick={clearMessages}
           className="flex items-center gap-3 transition-opacity hover:opacity-70"
@@ -49,7 +49,7 @@ export default function Home() {
           <img
             src="/tesco-logo.png"
             alt="Tesco"
-            className="h-14 object-contain"
+            className="h-10 object-contain sm:h-14"
           />
         </div>
       </header>
@@ -62,7 +62,7 @@ export default function Home() {
             <div className="mb-6">
               <img src="/Blueberry-logo.png" alt="Blueberry" className="h-16 w-16 object-contain" />
             </div>
-            <h2 className="mb-2 text-lg font-semibold">
+            <h2 className="mb-2 text-center text-lg font-semibold">
               Check, create or transcreate English content for CE
             </h2>
             <p className="mb-8 max-w-md text-center text-sm text-muted-foreground">
@@ -80,7 +80,7 @@ export default function Home() {
               <p className="mb-3 text-center text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 Suggestions
               </p>
-              <div className="grid gap-2 sm:grid-cols-4">
+              <div className="grid gap-2 grid-cols-2 lg:grid-cols-4">
                 <SuggestionCard
                   onClick={() =>
                     sendMessage(
