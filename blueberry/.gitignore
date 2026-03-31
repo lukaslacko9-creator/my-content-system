@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# bundled content (copied at build time from parent dir)
+/src/content/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

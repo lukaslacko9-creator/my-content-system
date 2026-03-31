@@ -2,14 +2,19 @@ import { readFileSync } from "fs";
 import { join } from "path";
 
 function loadFile(relativePath: string): string {
-  try {
-    return readFileSync(
-      join(process.cwd(), "..", relativePath),
-      "utf-8"
-    );
-  } catch {
-    return "";
+  // Try bundled content first (works on Vercel), fall back to parent dir (local dev)
+  const paths = [
+    join(process.cwd(), "src", "content", relativePath),
+    join(process.cwd(), "..", relativePath),
+  ];
+  for (const p of paths) {
+    try {
+      return readFileSync(p, "utf-8");
+    } catch {
+      continue;
+    }
   }
+  return "";
 }
 
 export function buildSystemPrompt(): string {
