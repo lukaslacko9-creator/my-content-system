@@ -179,112 +179,83 @@ export async function POST(req: NextRequest) {
               4096
             );
 
-            // ----- CHUNK 5: Final Report (silent) -----
-            sendChunk(controller, { status: "Compiling report..." });
-
-            const reportResult = await callClaude(
-              buildReportPrompt(),
-              [
-                {
-                  role: "user" as const,
-                  content: `Here is the complete review to compile into a final report:
-
-## Content Inventory
-${inventory}
-
-## Glossary & Formatting Findings
-${glossaryResult}
-
-## Writing Rules & Principles Findings
-${writingResult}
-
-## Accessibility & Component Findings
-${accessibilityResult}
-
-Compile ALL issues found above into the final report. Include every issue — do not drop any. Group by severity, provide the clean rewrite with all fixes applied, and the final verdict.`,
-                },
-              ],
-              8192
-            );
-
-            // ----- CHUNK 6: Pass 2 Re-scan (silent) -----
-            sendChunk(controller, { status: "Running final quality check..." });
-
-            const rescanResult = await callClaude(
-              buildRescanPrompt(),
-              [
-                {
-                  role: "user" as const,
-                  content: `Here is the original content inventory and the clean rewrite from the report. Re-scan both for missed issues.
-
-## Original Content Inventory
-${inventory}
-
-## Report with Clean Rewrite
-${reportResult}
-
-Run every P2.1-P2.17 re-scan check against the original inventory. Then validate the rewrite doesn't introduce new violations. Be thorough — this is the final quality gate. ONLY output issues you CAUGHT that were missed. If the rewrite is clean, say "REWRITE VALIDATED".`,
-                },
-              ],
-              4096
-            );
-
-            // ----- CHUNK 7: User-Friendly Output (streamed) -----
-            sendChunk(controller, { status: "Preparing results..." });
+            // ----- CHUNK 5: Final Output (streamed) -----
+            // Single call: takes raw findings from chunks 2-4 and produces user-friendly output
+            // No intermediate report/rescan steps — direct from findings to presentation
+            sendChunk(controller, { status: "Compiling results..." });
 
             const finalStream = await anthropic.messages.stream({
               model: "claude-sonnet-4-20250514",
               max_tokens: 8192,
               system: `${BLUEBERRY_PERSONALITY}
 
-You are presenting the final results of a content review to a content designer. Format the output to be clean, scannable, and actionable. Use Geist Mono formatting for copy examples (wrap in code blocks).
+You are compiling the results of a thorough content review into a clean, actionable report for a content designer.
+
+You will receive:
+1. A content inventory (every piece of text extracted from the screenshot/copy)
+2. Raw findings from 3 review passes (glossary, writing rules, accessibility)
+
+Your job: compile ALL issues from ALL passes into a single clear output. Do NOT drop any issues. If two passes flagged the same thing, mention it once.
+
+## MANDATORY TERM REPLACEMENTS
+
+Before writing the rewrite, apply ALL of these — even if the review passes missed some:
+- "home delivery" → "delivery" (ALWAYS — "home" is redundant, delivery means to your home)
+- "unlock" → "get" or "start" (ALWAYS — marketing/gaming speak, not how people talk)
+- "fees" → "charges" (ALWAYS — Tesco glossary rule 9A.7)
+- "2x" or "2×" or "2x more" → "double" (ALWAYS — no math symbols, use plain English)
+- "3x" or "3×" → "triple" (ALWAYS — no math symbols)
+- "log in" / "log out" → "sign in" / "sign out" (ALWAYS)
+- "click" or "tap" → "select" (ALWAYS)
+- Fix any Title Case to sentence case
+- Fix any inconsistent currency formats
+
+After applying all fixes, re-read the rewrite and verify NONE of these terms remain.
+
+## OUTPUT FORMAT
 
 Structure your output EXACTLY as:
 
-## Issues found
+### Issues found
 
-For each issue, provide:
-- The problematic text (quoted)
+For each issue:
+- The problematic text (quoted, with element # from inventory)
 - The rule it breaks (rule number and name)
-- Why it matters (1 sentence explaining the impact)
-- The fix (compliant version)
+- Why it matters (1 sentence)
+- The fix
 
-Group by severity using these labels:
-- **Critical** — must fix (accessibility, inclusive language, blame-the-user)
-- **Important** — should fix (principle violations, tone, component structure)
-- **Style** — nice to fix (glossary, formatting, unnecessary words)
+Group by severity:
+- **Critical** — must fix (accessibility, inclusive language)
+- **Important** — should fix (principles, tone, component structure)
+- **Style** — nice to fix (glossary, formatting, redundant words)
 
-## Full rewrite
+### Full rewrite
 
-The complete rewritten content with ALL issues fixed, ready to copy. Use a code block.
+The complete rewritten content with ALL issues fixed. Use a code block. Every mandatory term replacement must be applied.
 
-CRITICAL REWRITE RULES — apply these to the rewrite even if the review missed them:
-- "home delivery" → "delivery" (always — "home" is redundant)
-- "unlock" → "get" or "start" (always — marketing speak)
-- "fees" → "charges" (always — Tesco glossary)
-- "2x" or "2×" → "double" (always — plain English, no math symbols)
-- "3x" or "3×" → "triple" (always — plain English)
-- No Title Case in body copy, bullets, or headings (sentence case only)
-- "log in" → "sign in" (always)
-- "click" or "tap" → "select" (always)
+### Summary
 
-## Summary
+2-3 sentences on what changed and why.
 
-2-3 sentence summary of the key changes and why they matter.
-
-Keep it concise. No compliance matrices, no PASS/ISSUE checklists, no step numbers. Just the issues, the rewrite, and the summary.`,
+Keep it concise. No compliance matrices, no PASS/ISSUE checklists, no step numbers.`,
               messages: [
                 {
                   role: "user" as const,
-                  content: `Here is the detailed review and quality check results. Present them in a clean, user-friendly format.
+                  content: `Here is the content inventory and all findings from 3 review passes. Compile into a clean report with all issues and a complete rewrite.
 
-## Detailed Review Report
-${reportResult}
+## CONTENT INVENTORY
+${inventory}
 
-## Quality Re-check Results
-${rescanResult}
+## PASS 1: GLOSSARY & FORMATTING FINDINGS
+${glossaryResult}
 
-Present ALL issues from both the report and the re-check. If the re-check caught additional issues, include those too. Apply ALL fixes to the final rewrite — including any corrections from the re-check.`,
+## PASS 2: WRITING RULES & PRINCIPLES FINDINGS
+${writingResult}
+
+## PASS 3: ACCESSIBILITY & COMPONENT FINDINGS
+${accessibilityResult}
+
+IMPORTANT: Include EVERY issue found across all 3 passes. Apply EVERY mandatory term replacement to the rewrite. Re-read the rewrite before outputting to verify no forbidden terms remain (especially "home delivery", "unlock", "fees", "2x").`,
                 },
               ],
             });
