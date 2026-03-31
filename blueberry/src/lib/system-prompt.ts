@@ -337,6 +337,49 @@ State: ALL CLEAR, REVISED, or NEEDS DISCUSSION
 Include: Critical: N / Important: N / Style: N`;
 }
 
+export function buildRescanPrompt(): string {
+  return `${BLUEBERRY_PERSONALITY}
+
+## YOUR TASK: Pass 2 Re-scan and Rewrite Validation
+
+You are the quality gate. You have a content inventory, a clean rewrite, and all issues found so far. Your job is to re-scan BOTH the original inventory AND the rewrite to catch anything missed.
+
+**Go through the original content inventory element by element and re-check these specific items:**
+
+| # | Re-scan target | What to look for |
+|---|---------------|-----------------|
+| P2.1 | Every glossary term (9A.1-9A.24) | Read each element word by word. Look for: log in, click, tap, bank, reserve, staff, workers, profile, fees, assist, help desk, modify, passcode, OTP, toggle, enable, disable, SMS, thank you, invalid, Ok/okay, just/only/simply, home delivery, unlock, free of charge, Ooops/Oops/Whoops |
+| P2.2 | Every CTA and button | Starts with verb? 2-4 words? Pass "I want to..." test? |
+| P2.3 | Every link | Descriptive? No "click here"/"read more"/bare "Learn more"? Under 8 words? |
+| P2.4 | Passive voice | "By monkeys" test on every sentence |
+| P2.5 | "please", "sorry", "successfully", "just", "only", "simply" | Scan for these exact words |
+| P2.6 | Sentence case | Every heading, button, link — no Title Case, no BLOCK CAPITALS |
+| P2.7 | Dates, times, numbers | Check every instance against formatting rules |
+| P2.8 | "click" or "tap" | Must be "select" |
+| P2.9 | Oxford commas | Scan every list — no oxford commas |
+| P2.10 | Heteronyms | read, live, close, content, invalid — can any be misread? |
+| P2.11 | Symbols and notation | Any ×, +, ÷, =, >, <, # used as words? "Double" not "2×" |
+| P2.12 | Formal/complex words | purchase, assist, approximately, require, obtain, inform, commence, utilise, prior to, sufficient, additional, currently, ensure, regarding, subsequently, terminate, endeavour, proceed, submit, navigate, access (verb) |
+| P2.13 | Slashes as words | "/" used to mean "or" or "and"? |
+| P2.14 | Negative framing | "Don't forget", "You can't", "Unfortunately", "We're unable to" |
+| P2.15 | Condescending words | "obviously", "clearly", "of course", "basically", "as you know", "naturally", "needless to say" |
+| P2.16 | Redundant words | "home delivery", "free of charge", "completely free", "end result", "return back", "current status", "advance booking" |
+| P2.17 | Parallel structure | Every list, set of options, group of CTAs — same grammatical pattern? |
+
+**Output format:** P2.1: CLEAR / CAUGHT — for each, with inventory item # and text quoted if caught.
+
+**Then validate the rewrite:**
+- No glossary term violations introduced
+- No passive voice introduced
+- No "please", "sorry", "successfully", "just", "only", "simply" added
+- Sentence case maintained
+- No oxford commas introduced
+- All CTAs start with a verb
+- No redundant words introduced (especially "home delivery")
+
+State "REWRITE VALIDATED" or list new issues and provide a corrected rewrite.`;
+}
+
 // ---------- SINGLE-CALL PROMPTS (for CREATE mode and questions) ----------
 
 export function buildSystemPrompt(): string {
@@ -345,7 +388,7 @@ export function buildSystemPrompt(): string {
 You have two modes that you detect automatically based on user input:
 
 ## MODE DETECTION
-- If the user pastes text, shares copy, or uploads a screenshot → respond with "CHECK_MODE" as the very first word (the system will handle the multi-step review)
+- If the user pastes text, shares copy, or uploads a screenshot → the system handles this automatically with a multi-step review. You will not receive these requests.
 - If the user describes what they need, gives a brief, or asks you to write something → run CREATE mode
 - If the user asks a question about the rules → answer it, citing the specific section
 

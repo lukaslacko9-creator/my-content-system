@@ -607,7 +607,7 @@ Go back to the **Content Inventory from Step 1** (not the rewrite). Work through
 
 | # | Re-scan target | What to look for |
 |---|---------------|-----------------|
-| P2.1 | Every glossary term (9A.1-9A.20) and term distinction (9C.1-9C.10) | Read the content word by word one more time. Did you miss any forbidden terms or misused distinctions? |
+| P2.1 | Every glossary term (9A.1-9A.24) and term distinction (9C.1-9C.10) | Read the content word by word one more time. Did you miss any forbidden terms or misused distinctions? Check especially for: home delivery, unlock, free of charge, fees. |
 | P2.2 | Every CTA and button | Does it start with a verb? 2-4 words? Pass the "I want to..." test? |
 | P2.3 | Every link | Descriptive? No "click here"/"read more"? Makes sense out of context? Under 8 words? |
 | P2.4 | Passive voice | Re-run the "by monkeys" test on every sentence |

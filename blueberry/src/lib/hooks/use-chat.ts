@@ -105,9 +105,11 @@ export function useChat() {
                 });
               }
             } catch (e) {
-              if (e instanceof Error && e.message !== "Stream error") {
-                // Ignore parse errors for incomplete chunks
+              if (e instanceof SyntaxError) {
+                // Incomplete SSE chunk, will be completed in next read
+                continue;
               }
+              throw e;
             }
           }
         }

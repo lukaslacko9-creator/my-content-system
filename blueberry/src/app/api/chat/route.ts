@@ -6,8 +6,12 @@ import {
   buildWritingRulesPrompt,
   buildAccessibilityPrompt,
   buildReportPrompt,
+  buildRescanPrompt,
 } from "@/lib/system-prompt";
 import { NextRequest } from "next/server";
+
+// Allow up to 300 seconds for the multi-call chain (5 sequential API calls)
+export const maxDuration = 300;
 
 const anthropic = new Anthropic();
 
@@ -51,10 +55,15 @@ function isCheckMode(messages: Array<{ role: string; content: string; image?: un
   if (!lastUser) return false;
   // If there's an image, it's almost certainly a check request
   if (lastUser.image) return true;
-  // Check for keywords suggesting a check
+  // Only trigger CHECK mode for explicit check/review/audit requests
+  // NOT for "rewrite", "rules" alone — those could be CREATE requests
   const text = lastUser.content.toLowerCase();
-  const checkKeywords = ["check", "review", "audit", "blueberry", "rules", "issues", "rewrite"];
-  return checkKeywords.some((kw) => text.includes(kw));
+  const checkPhrases = [
+    "check this", "check the", "check my", "check copy", "check against",
+    "review this", "review the", "review my", "review copy",
+    "audit this", "audit the", "audit my",
+  ];
+  return checkPhrases.some((phrase) => text.includes(phrase));
 }
 
 // Build Anthropic message format (with optional image)
@@ -131,7 +140,7 @@ export async function POST(req: NextRequest) {
             const inventory = await callClaude(
               buildInventoryPrompt(),
               [inventoryMsg],
-              2048
+              4096
             );
 
             sendChunk(controller, { text: "## Step 1: Content Inventory and Classification\n\n" + inventory + "\n\n---\n\n" });
@@ -175,14 +184,12 @@ export async function POST(req: NextRequest) {
 
             sendChunk(controller, { text: "## Step 4: Accessibility, Inclusion, and Components\n\n" + accessibilityResult + "\n\n---\n\n" });
 
-            // ----- CHUNK 5: Final Report (streamed) -----
+            // ----- CHUNK 5: Final Report -----
             sendChunk(controller, { status: "Compiling final report and rewrite..." });
 
-            const reportStream = await anthropic.messages.stream({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 8192,
-              system: buildReportPrompt(),
-              messages: [
+            const reportResult = await callClaude(
+              buildReportPrompt(),
+              [
                 {
                   role: "user" as const,
                   content: `Here is the complete review to compile into a final report:
@@ -202,9 +209,35 @@ ${accessibilityResult}
 Compile ALL issues found above into the final report. Include every issue — do not drop any. Group by severity, provide the compliance matrix, the clean rewrite with all fixes applied, and the final verdict.`,
                 },
               ],
+              8192
+            );
+
+            sendChunk(controller, { text: reportResult + "\n\n---\n\n" });
+
+            // ----- CHUNK 6: Pass 2 Re-scan (streamed) -----
+            sendChunk(controller, { status: "Running Pass 2 re-scan and rewrite validation..." });
+
+            const rescanStream = await anthropic.messages.stream({
+              model: "claude-sonnet-4-20250514",
+              max_tokens: 4096,
+              system: buildRescanPrompt(),
+              messages: [
+                {
+                  role: "user" as const,
+                  content: `Here is the original content inventory and the clean rewrite from the report. Re-scan both for missed issues.
+
+## Original Content Inventory
+${inventory}
+
+## Report with Clean Rewrite
+${reportResult}
+
+Run every P2.1-P2.17 re-scan check against the original inventory. Then validate the rewrite doesn't introduce new violations. Be thorough — this is the final quality gate.`,
+                },
+              ],
             });
 
-            for await (const event of reportStream) {
+            for await (const event of rescanStream) {
               if (
                 event.type === "content_block_delta" &&
                 event.delta.type === "text_delta"
@@ -277,6 +310,7 @@ Compile ALL issues found above into the final report. Include every issue — do
           } catch (err) {
             const msg = err instanceof Error ? err.message : "Stream error";
             sendChunk(controller, { text: `\n\n**Error:** ${msg}` });
+            controller.enqueue(encoder.encode("data: [DONE]\n\n"));
             controller.close();
           }
         },
