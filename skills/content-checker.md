@@ -122,7 +122,7 @@ Run through EVERY rule in this table. Check each one individually against the co
 | 5.3 | Verb-led CTAs | Buttons, links, and headings should start with a verb |
 | 5.4 | Sentence length | Aim for 15 words, flag anything over 25 |
 | 5.5 | Readability | Target Hemingway grade 6 or lower |
-| 5.6 | Plain language | Short words over long (buy not purchase, help not assist, around not approximately) |
+| 5.6 | Plain language | Short words over long (buy not purchase, help not assist, around not approximately). No mathematical symbols or notation (×, +, ÷, =, >, <) — use plain English words instead ("double" not "2×", "more than" not ">"). Symbols are ambiguous for screen readers and exclude people with low numeracy. |
 | 5.7 | No Latin | No e.g., i.e., etc., per annum — use "for example", "such as", "that is", "each year" |
 | 5.8 | No ampersands | Use "and" except in brand names or very tight spaces |
 | 5.9 | No "and/or" | Rewrite for clarity |
@@ -493,8 +493,9 @@ Go back to the original content (not your rewrite) and explicitly re-check these
 | P2.8 | "click" or "tap" | Must be "select" |
 | P2.9 | Oxford commas | Scan every list — no oxford commas (British English style) |
 | P2.10 | Heteronyms | Check for: read, live, close, content, invalid — can any be misread? |
+| P2.11 | Symbols and notation | Scan for any mathematical symbols (×, +, ÷, =, >, <, %, #, @) or notation used in place of plain English words. "Double" not "2×", "more than" not ">", "number" not "#". % symbol is OK for percentages (25%). |
 
-**Required output:** Numbered checklist P2.1-P2.10. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
+**Required output:** Numbered checklist P2.1-P2.11. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
 
 ### Rewrite Validation
 
