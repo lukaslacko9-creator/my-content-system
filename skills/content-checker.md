@@ -17,22 +17,9 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 4. No step references "see above" or "as before" — each step must contain its own findings
 
 **If reviewing a screenshot or image:**
-- First, extract ALL visible text into a structured inventory. Label it "Extracted text from screenshot"
-- Use this exact format for each element found:
-
-```
-| # | Element type | Text | Notes |
-|---|-------------|------|-------|
-| 1 | Button | "Add to basket" | Primary CTA |
-| 2 | Heading (H1) | "Your delivery slot" | Page title |
-| 3 | Body copy | "Choose a time that works..." | Below heading |
-| ... | ... | ... | ... |
-```
-
-- Number every element sequentially — this becomes the reference for the review
+- First, extract ALL visible text from the screenshot before building the inventory below
 - Flag any text that is partially obscured, truncated, or unclear — do not guess
-- Only review the extracted text. If extraction is uncertain, state what is unclear before proceeding
-- After extraction, review the inventory element by element — do not review the screenshot as a whole
+- If extraction is uncertain, state what is unclear before proceeding
 
 **If reviewing multiple screens, pages, or a flow:**
 - Number each screen/page (Screen 1, Screen 2, etc.)
@@ -43,17 +30,45 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 
 ## PASS 1: Full Review
 
-### Step 1: Classify the Content
+### Step 1: Content Inventory and Classification
 
-Before checking anything, identify and write out:
+**This is the most critical step. Every subsequent check references this inventory. If an element isn't in the inventory, it won't be checked.**
 
-- **Content type:** CTA/button, link, heading, body copy, error message, warning, success message, info message, amend message, modal, popover, loading spinner, rating, push notification, email, chatbot/AI response, help article, form label, tooltip, or other
+**1A — Build the Content Inventory**
+
+Break ALL content into individual elements using this exact table format. Every piece of text must appear as its own row — do not combine elements:
+
+```
+| # | Element type | Text (exact quote) | Word count |
+|---|-------------|-------------------|------------|
+| 1 | Heading (H1) | "Your delivery slot" | 3 |
+| 2 | Body copy | "Choose a time that works for you." | 7 |
+| 3 | Button (primary) | "Add to basket" | 3 |
+| 4 | Button (secondary) | "Continue browsing" | 2 |
+| 5 | Link | "View all delivery slots" | 4 |
+| 6 | Body copy | "Same-day home delivery slots without fees" | 7 |
+| 7 | Form label | "Email address" | 2 |
+| ... | ... | ... | ... |
+```
+
+Rules for building the inventory:
+- Every heading, subheading, button, link, label, body sentence, error message, tooltip, and placeholder gets its own row
+- For body copy, break into individual sentences — one sentence per row
+- Number every element sequentially — this number is the reference ID for all subsequent steps
+- The word count column helps flag sentences over 15/25 words immediately
+- Do NOT summarise or paraphrase — quote the exact text
+
+**1B — Classify the Content**
+
+After the inventory, state:
+
+- **Content types present:** list every type found in the inventory (CTA/button, link, heading, body copy, error message, warning, success message, info message, amend message, modal, popover, loading spinner, rating, form label, tooltip, chatbot/AI response, etc.)
 - **Platform context:** app, web, mWeb, self-service checkout, colleague tool, chatbot, voice assistant
 - **Emotional context:** what is the user likely feeling at this point? (browsing, stressed, confused, excited, anxious)
 
 This classification determines which component-specific rules apply in later steps.
 
-**Required output:** State the content type, platform, and emotional context explicitly. If multiple content types are present, list every one — each will be checked against its component rules in Step 6.
+**Required output:** The complete content inventory table (1A) AND the classification (1B). If any element is ambiguous (is it a button or a link?), state the ambiguity. A review without a complete inventory is invalid.
 
 ---
 
@@ -113,7 +128,7 @@ Check:
 
 ### Step 5: Writing Rules Check
 
-Run through EVERY rule in this table. Check each one individually against the content:
+**Go through the Content Inventory from Step 1 element by element.** For each rule below, scan every inventory item (by #) and check it. Do not review "the content as a whole" — check each numbered element against each rule.
 
 | # | Rule | Check for |
 |---|------|-----------|
@@ -367,7 +382,7 @@ Check every rule individually:
 
 ### Step 9: Glossary and Formatting Compliance
 
-**9A — Glossary term scan.** Check EVERY term in the table below against ALL text in the content. Read through the content word by word looking for violations:
+**9A — Glossary term scan.** Go through the Content Inventory from Step 1 element by element (by #). For each element, scan its text against EVERY term in the table below. This is a word-by-word scan — read each inventory item's text slowly and check for matches:
 
 | # | Don't use | Use instead |
 |---|-----------|-------------|
@@ -484,7 +499,7 @@ After completing the full review above, run this second pass. Pass 2 catches the
 
 ### Re-scan Checklist
 
-Go back to the original content (not your rewrite) and explicitly re-check these specific items. For each, quote the relevant text and confirm the finding:
+Go back to the **Content Inventory from Step 1** (not the rewrite). Work through it element by element (by #) for each re-scan target below. Quote the inventory item number and text for every finding:
 
 | # | Re-scan target | What to look for |
 |---|---------------|-----------------|
