@@ -17,9 +17,12 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 4. No step references "see above" or "as before" — each step must contain its own findings
 
 **If reviewing a screenshot or image:**
-- First, extract ALL visible text from the screenshot before building the inventory below
+- The screenshot goes through the SAME Step 1 Content Inventory as any other input — no shortcut
+- In Step 1A, you must visually scan the entire screenshot region by region (top to bottom, left to right) and extract every piece of text into the inventory table
+- For each element, identify its type from visual appearance: buttons have borders/fills, links are underlined/coloured, headings are larger/bolder, body copy is standard size, labels sit above form fields
 - Flag any text that is partially obscured, truncated, or unclear — do not guess
 - If extraction is uncertain, state what is unclear before proceeding
+- A screenshot review is ONLY as good as the inventory extraction — if you miss text in the inventory, it won't be checked in any step
 
 **If reviewing multiple screens, pages, or a flow:**
 - Number each screen/page (Screen 1, Screen 2, etc.)
@@ -54,9 +57,16 @@ Break ALL content into individual elements using this exact table format. Every 
 Rules for building the inventory:
 - Every heading, subheading, button, link, label, body sentence, error message, tooltip, and placeholder gets its own row
 - For body copy, break into individual sentences — one sentence per row
+- For bullet point lists, each bullet gets its own row
 - Number every element sequentially — this number is the reference ID for all subsequent steps
 - The word count column helps flag sentences over 15/25 words immediately
 - Do NOT summarise or paraphrase — quote the exact text
+
+**Extra rules for screenshots:**
+- Scan the image systematically: top to bottom, left to right — don't jump around
+- Include navigation items, footer links, breadcrumbs, tab labels, badges, and any other visible text
+- If a UI element's type is ambiguous from the screenshot, note the ambiguity (e.g., "Link or button — unclear from screenshot")
+- Count elements after extraction and do a visual recheck: scan the screenshot one more time to confirm you haven't missed anything. State "Visual recheck complete — [N] elements found" or "Visual recheck — found [N] additional elements" if you missed any
 
 **1B — Classify the Content**
 
