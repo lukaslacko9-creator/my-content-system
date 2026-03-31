@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, existsSync } from "fs";
+import { cpSync, mkdirSync, existsSync, statSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -25,7 +25,6 @@ for (const file of files) {
   const destPath = join(destDir, file.dest);
   if (existsSync(srcPath)) {
     cpSync(srcPath, destPath);
-    const { statSync } = await import("fs");
     const size = statSync(destPath).size;
     console.log(`[copy-content] ✓ Copied ${file.src} → src/content/${file.dest} (${size} bytes)`);
     copied++;
