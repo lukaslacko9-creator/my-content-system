@@ -64,7 +64,7 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 ## Step 9: Glossary and Formatting
 ### 9A — Glossary
 - 9A.1: PASS / ISSUE / N/A
-[... through 9A.20]
+[... through 9A.24]
 ### 9B — Formatting
 - 9B.1: PASS / ISSUE / N/A
 [... through 9B.9]
@@ -506,6 +506,10 @@ Check every rule individually:
 | 9A.18 | invalid | not working, not right, wrong |
 | 9A.19 | Ok, okay, O.K. | OK |
 | 9A.20 | just, only, simply (directions) | Remove — sounds patronising |
+| 9A.21 | home delivery | delivery — "home" is redundant, delivery means to your home |
+| 9A.22 | unlock (for features/benefits) | get, start, access — "unlock" is gaming/marketing speak, not how people talk |
+| 9A.23 | free of charge | free — "of charge" is redundant |
+| 9A.24 | Ooops, Oops, Whoops (in errors) | Remove — don't be jokey in error messages |
 
 **9B — Formatting checks:**
 
@@ -542,7 +546,7 @@ Check every rule individually:
 | 9C.9 | set up vs setup | "Set up" = verb ("Set up your account"). "Setup" = noun/adjective ("Your account setup is complete") |
 | 9C.10 | Clubcard terms | "Clubcard" (one word, capital C). "Clubcard Prices" (both capitalised). "Clubcard points" (lowercase p). Always "collect" points — never "earn" or "get" |
 
-**Required output:** Three numbered checklists (9A.1-9A.20, 9B.1-9B.9 including sub-rules 9B.1a/1b/2a/2b/2c/2d, and 9C.1-9C.10). Each must show PASS (term not found / formatting correct), ISSUE (with offending text quoted), or N/A. No item may be skipped.
+**Required output:** Three numbered checklists (9A.1-9A.24, 9B.1-9B.9 including sub-rules 9B.1a/1b/2a/2b/2c/2d, and 9C.1-9C.10). Each must show PASS (term not found / formatting correct), ISSUE (with offending text quoted), or N/A. No item may be skipped.
 
 ---
 
