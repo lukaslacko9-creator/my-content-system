@@ -7,6 +7,7 @@ import {
   buildAccessibilityPrompt,
   buildReportPrompt,
   buildRescanPrompt,
+  BLUEBERRY_PERSONALITY,
 } from "@/lib/system-prompt";
 import { NextRequest } from "next/server";
 
@@ -143,7 +144,7 @@ export async function POST(req: NextRequest) {
               4096
             );
 
-            sendChunk(controller, { text: "## Step 1: Content Inventory and Classification\n\n" + inventory + "\n\n---\n\n" });
+            // Inventory stays hidden — only used as context for subsequent chunks
 
             // ----- CHUNK 2: Glossary & Formatting -----
             sendChunk(controller, { status: "Scanning glossary and formatting rules..." });
@@ -156,8 +157,6 @@ export async function POST(req: NextRequest) {
               4096
             );
 
-            sendChunk(controller, { text: "## Step 2: Glossary, Formatting, and Term Distinctions\n\n" + glossaryResult + "\n\n---\n\n" });
-
             // ----- CHUNK 3: Writing Rules & Principles -----
             sendChunk(controller, { status: "Checking writing rules and principles..." });
 
@@ -168,8 +167,6 @@ export async function POST(req: NextRequest) {
               ],
               4096
             );
-
-            sendChunk(controller, { text: "## Step 3: Writing Rules and Principles\n\n" + writingResult + "\n\n---\n\n" });
 
             // ----- CHUNK 4: Accessibility & Components -----
             sendChunk(controller, { status: "Checking accessibility and component rules..." });
@@ -182,10 +179,8 @@ export async function POST(req: NextRequest) {
               4096
             );
 
-            sendChunk(controller, { text: "## Step 4: Accessibility, Inclusion, and Components\n\n" + accessibilityResult + "\n\n---\n\n" });
-
-            // ----- CHUNK 5: Final Report -----
-            sendChunk(controller, { status: "Compiling final report and rewrite..." });
+            // ----- CHUNK 5: Final Report (silent) -----
+            sendChunk(controller, { status: "Compiling report..." });
 
             const reportResult = await callClaude(
               buildReportPrompt(),
@@ -206,22 +201,18 @@ ${writingResult}
 ## Accessibility & Component Findings
 ${accessibilityResult}
 
-Compile ALL issues found above into the final report. Include every issue — do not drop any. Group by severity, provide the compliance matrix, the clean rewrite with all fixes applied, and the final verdict.`,
+Compile ALL issues found above into the final report. Include every issue — do not drop any. Group by severity, provide the clean rewrite with all fixes applied, and the final verdict.`,
                 },
               ],
               8192
             );
 
-            sendChunk(controller, { text: reportResult + "\n\n---\n\n" });
+            // ----- CHUNK 6: Pass 2 Re-scan (silent) -----
+            sendChunk(controller, { status: "Running final quality check..." });
 
-            // ----- CHUNK 6: Pass 2 Re-scan (streamed) -----
-            sendChunk(controller, { status: "Running Pass 2 re-scan and rewrite validation..." });
-
-            const rescanStream = await anthropic.messages.stream({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 4096,
-              system: buildRescanPrompt(),
-              messages: [
+            const rescanResult = await callClaude(
+              buildRescanPrompt(),
+              [
                 {
                   role: "user" as const,
                   content: `Here is the original content inventory and the clean rewrite from the report. Re-scan both for missed issues.
@@ -232,12 +223,63 @@ ${inventory}
 ## Report with Clean Rewrite
 ${reportResult}
 
-Run every P2.1-P2.17 re-scan check against the original inventory. Then validate the rewrite doesn't introduce new violations. Be thorough — this is the final quality gate.`,
+Run every P2.1-P2.17 re-scan check against the original inventory. Then validate the rewrite doesn't introduce new violations. Be thorough — this is the final quality gate. ONLY output issues you CAUGHT that were missed. If the rewrite is clean, say "REWRITE VALIDATED".`,
+                },
+              ],
+              4096
+            );
+
+            // ----- CHUNK 7: User-Friendly Output (streamed) -----
+            sendChunk(controller, { status: "Preparing results..." });
+
+            const finalStream = await anthropic.messages.stream({
+              model: "claude-sonnet-4-20250514",
+              max_tokens: 8192,
+              system: `${BLUEBERRY_PERSONALITY}
+
+You are presenting the final results of a content review to a content designer. Format the output to be clean, scannable, and actionable. Use Geist Mono formatting for copy examples (wrap in code blocks).
+
+Structure your output EXACTLY as:
+
+## Issues found
+
+For each issue, provide:
+- The problematic text (quoted)
+- The rule it breaks (rule number and name)
+- Why it matters (1 sentence explaining the impact)
+- The fix (compliant version)
+
+Group by severity using these labels:
+- **Critical** — must fix (accessibility, inclusive language, blame-the-user)
+- **Important** — should fix (principle violations, tone, component structure)
+- **Style** — nice to fix (glossary, formatting, unnecessary words)
+
+## Full rewrite
+
+The complete rewritten content with ALL issues fixed, ready to copy. Use a code block.
+
+## Summary
+
+2-3 sentence summary of the key changes and why they matter.
+
+Keep it concise. No compliance matrices, no PASS/ISSUE checklists, no step numbers. Just the issues, the rewrite, and the summary.`,
+              messages: [
+                {
+                  role: "user" as const,
+                  content: `Here is the detailed review and quality check results. Present them in a clean, user-friendly format.
+
+## Detailed Review Report
+${reportResult}
+
+## Quality Re-check Results
+${rescanResult}
+
+Present ALL issues from both the report and the re-check. If the re-check caught additional issues, include those too. Apply ALL fixes to the final rewrite — including any corrections from the re-check.`,
                 },
               ],
             });
 
-            for await (const event of rescanStream) {
+            for await (const event of finalStream) {
               if (
                 event.type === "content_block_delta" &&
                 event.delta.type === "text_delta"
