@@ -7,11 +7,14 @@ A content design system based on Tesco's Blueberry design system principles. All
 ## Project Structure
 
 - `skills/` — Custom skills for content workflows
-  - `content-checker.md` — 10-step content review against all Blueberry rules (auto-activates on content edits)
+  - `content-checker.md` — 220+ rule content review with 2-pass architecture, content inventory, and numbered checklists (auto-activates on content edits in Claude Code; powers the chunked review in the web app)
   - `copy-creator.md` — 10-step guided content creation with full brief output
   - `transcreator.md` — 8-step transcreation from Slovak, Czech, and Hungarian into sign-off-ready English
   - `tone-checker.md` — Quick-reference checklist (legacy, superseded by content-checker)
   - `learn.md` — Captures learnings and patterns from content reviews
+- `blueberry/` — Next.js web app deployed to Vercel (blueberry-umber.vercel.app)
+  - Uses a 5-call chunked architecture for CHECK mode: inventory extraction → glossary scan → writing rules → accessibility → final output
+  - All 4 skills (checker, creator, transcreator) and CLAUDE.md are loaded via prebuild script
 - `memory.md` — Persistent context and decisions
 
 ---
@@ -711,7 +714,9 @@ Content design is the practice of shaping information so people can find it, und
 ## Conventions
 
 - All content should follow the principles and rules defined above
-- Use `skills/content-checker.md` (10-step review) to validate any content against these guidelines — this activates automatically when content is written or edited
+- Use `skills/content-checker.md` (220+ rules, 2-pass review) to validate any content against these guidelines — this activates automatically when content is written or edited in Claude Code
 - Use `skills/copy-creator.md` (10-step creation) to create new content with full brief output
+- Use `skills/transcreator.md` (8-step transcreation) for Slovak, Czech, and Hungarian to English transcreation
 - Use `skills/learn.md` to document patterns discovered during content work
+- The web app (blueberry-umber.vercel.app) uses a chunked 5-call architecture for reviews — all rules from the skills are loaded at build time via the prebuild script
 - Keep `memory.md` updated with key decisions and context
