@@ -17,10 +17,22 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 4. No step references "see above" or "as before" — each step must contain its own findings
 
 **If reviewing a screenshot or image:**
-- First, extract ALL visible text into a plain text block. Label it "Extracted text from screenshot"
-- Include UI element types (button, link, heading, body, label, etc.) for each piece of text
+- First, extract ALL visible text into a structured inventory. Label it "Extracted text from screenshot"
+- Use this exact format for each element found:
+
+```
+| # | Element type | Text | Notes |
+|---|-------------|------|-------|
+| 1 | Button | "Add to basket" | Primary CTA |
+| 2 | Heading (H1) | "Your delivery slot" | Page title |
+| 3 | Body copy | "Choose a time that works..." | Below heading |
+| ... | ... | ... | ... |
+```
+
+- Number every element sequentially — this becomes the reference for the review
 - Flag any text that is partially obscured, truncated, or unclear — do not guess
 - Only review the extracted text. If extraction is uncertain, state what is unclear before proceeding
+- After extraction, review the inventory element by element — do not review the screenshot as a whole
 
 **If reviewing multiple screens, pages, or a flow:**
 - Number each screen/page (Screen 1, Screen 2, etc.)
@@ -125,8 +137,12 @@ Run through EVERY rule in this table. Check each one individually against the co
 | 5.18 | No "successfully" | Unnecessary. "Your password was reset" not "Your password was successfully reset" |
 | 5.19 | No "just/only/simply" in directions | Sounds dismissive or patronising |
 | 5.20 | No possessive pronouns in UI elements | No "my" or "your" in headings, buttons, menus, labels — only in body copy |
+| 5.21 | No questions in headings | "Frontloading headings" not "Should I frontload my headings?" — statements outperform questions |
+| 5.22 | Explain technical terms | If a technical term is used, it must be explained the first time it appears |
+| 5.23 | Avoid FAQs | Don't use FAQ format — put important information in-journey where users need it |
+| 5.24 | Bullet point structure | Bullets must: complete a sentence, be front-loaded with key info, start with the same language element (all verbs, or all nouns), use correct grammar |
 
-**Required output:** A numbered checklist (5.1 through 5.20). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
+**Required output:** A numbered checklist (5.1 through 5.24). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
 
 ---
 
@@ -144,6 +160,8 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6B.4 | No figurative language |
 | 6B.5 | Must make sense without surrounding context |
 | 6B.6 | "Sign in" not "Log in" |
+| 6B.7 | Use links not buttons when sending users to another page for information |
+| 6B.8 | No "Got it" (confusing for non-native speakers) or "Dismiss" (unclear outcome) — use specific action verbs or "OK" |
 
 **Links:**
 
@@ -166,6 +184,15 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6M.4 | Brevity over personality |
 | 6M.5 | Extra concise for native iOS/Android modals |
 
+**General Messaging (applies to ALL message types — error, warning, success, info, amend):**
+
+| # | Rule |
+|---|------|
+| 6GM.1 | Start strong — most important information first |
+| 6GM.2 | Focus on one thing — don't overload with multiple issues in one message |
+| 6GM.3 | Include timescales — if there's a deadline or wait time, state it |
+| 6GM.4 | Focus on action — provide a way to fix problems or move forward |
+
 **Messaging (Error):**
 
 | # | Rule |
@@ -174,6 +201,7 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6E.2 | Never blame the user |
 | 6E.3 | Structure: heading (what's wrong) + body (why + how to fix) + CTA (action) |
 | 6E.4 | Specific but relevant — user language, not technical |
+| 6E.5 | No jokey tone in errors — don't say "Ooops", "Whoops", or similar. Friendly but serious. |
 
 **Messaging (Warning):**
 
@@ -226,6 +254,7 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6LS.3 | Brief — a few words or one sentence |
 | 6LS.4 | Time expectations only if reliable |
 | 6LS.5 | Personality OK for rewards/fun contexts, not for payments/sensitive data |
+| 6LS.6 | Show progress for longer waits — "75% complete" or step-by-step updates |
 
 **Ratings:**
 
@@ -235,6 +264,7 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6R.2 | Brief — not the user's primary goal |
 | 6R.3 | Label clearly what's being rated |
 | 6R.4 | No emotionally-charged star descriptions |
+| 6R.5 | Non-interactive ratings: pair visual stars with written text ("5 stars") and show number of reviewers |
 
 **Emoji (if present):**
 
@@ -246,6 +276,8 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 | 6EM.4 | Works in both light and dark mode |
 | 6EM.5 | Popular, widely understood emojis only |
 | 6EM.6 | No facial expressions unless universally understood |
+| 6EM.7 | Use emojis, not emoticons — emoticons lack alt text for screen readers |
+| 6EM.8 | Yellow skin tone doesn't mean "neutral" — consider representation |
 
 **Required output:** Name each component type being checked and produce a numbered checklist using the IDs above (e.g., 6B.1: PASS). Each rule must show PASS, ISSUE (with offending text), or N/A. If no component-specific rules apply, state that explicitly.
 
@@ -275,6 +307,12 @@ Check every rule individually:
 | 7A.14 | No abbreviations | Except universally understood (PDF, FAQ) |
 | 7A.15 | Video captions | Captions on all video, transcripts for audio |
 | 7A.16 | Audio descriptions | For videos with important visuals |
+| 7A.17 | Icon-only buttons | Icon-only buttons must have a text alternative |
+| 7A.18 | Decorative vs informational images | Decorative images should have empty alt text (alt=""). Only informational images need descriptive alt text. |
+| 7A.19 | Unique heading per page | Every page/screen should have a unique heading |
+| 7A.20 | Descriptive headings | Headings should make sense in isolation — descriptive, not vague |
+| 7A.21 | No shape/colour/position-only meaning | Don't rely on shape, size, colour, or position alone to convey meaning |
+| 7A.22 | Form field labelling | Only label optional fields — don't mark everything as (required) |
 
 **7B — Inclusive language:**
 
@@ -291,8 +329,11 @@ Check every rule individually:
 | 7B.9 | Respectful character references | Don't call characters like à or š "special" |
 | 7B.10 | Diverse examples | Diverse names if examples are used |
 | 7B.11 | No value-laden metaphors | No black/white/dark/light as value metaphors (dark mode/light mode are fine) |
+| 7B.12 | Pronouns phrasing | Ask for "pronouns" not "preferred pronouns" |
+| 7B.13 | No "other" gender option | Don't include "other" as a gender option — let people self-describe or skip |
+| 7B.14 | Question titles | Consider whether titles (Mr/Mrs/Ms) are needed at all — avoid if possible |
 
-**Required output:** Two numbered checklists (7A.1-7A.16 and 7B.1-7B.11). Each rule must show PASS, ISSUE (with offending text), or N/A (with reason). No rule may be skipped.
+**Required output:** Two numbered checklists (7A.1-7A.22 and 7B.1-7B.14). Each rule must show PASS, ISSUE (with offending text), or N/A (with reason). No rule may be skipped.
 
 ---
 
@@ -313,8 +354,9 @@ Check every rule individually:
 | 8.9 | Consistent terminology | Don't switch terms mid-conversation |
 | 8.10 | Never blame user | Handle miscommunications gracefully |
 | 8.11 | Personality alignment | Friendly, empathetic, helpful. Not jokey about serious issues. |
+| 8.12 | AI terminology | Use "virtual assistant" or "chat assistant" for AI. Use "agent" only for human agents. |
 
-**Required output:** If applicable, numbered checklist 8.1-8.11 with PASS, ISSUE, or N/A per rule. If not applicable, state "N/A — not conversational UI".
+**Required output:** If applicable, numbered checklist 8.1-8.12 with PASS, ISSUE, or N/A per rule. If not applicable, state "N/A — not conversational UI".
 
 ---
 
@@ -349,16 +391,38 @@ Check every rule individually:
 
 | # | Rule | Check for |
 |---|------|-----------|
-| 9B.1 | Dates | "1 January 2000" not "01/01/2000" or "1st January". No ordinals. |
-| 9B.2 | Times | "1.30pm" not "1:30pm" or "1.30 pm" or "13:30". 12-hour clock, full stop separator, no space before am/pm. |
+| 9B.1 | Dates — format | "1 January 2000" not "01/01/2000" or "1st January". No ordinals. Short: "1 Jan 2000". |
+| 9B.1a | Dates — ranges | Hyphen no spaces for same month (1-2 January). Spaces around hyphen for cross-month (1 January - 1 February). |
+| 9B.1b | Dates — year | Don't include the year unless the date isn't this year. |
+| 9B.2 | Times — format | "1.30pm" not "1:30pm" or "1.30 pm" or "13:30". 12-hour clock, full stop separator, no space before am/pm. |
+| 9B.2a | Times — zeros | No leading zeros (9am not 09am). No minutes when zero (1pm not 1.00pm). |
+| 9B.2b | Times — noon/midnight | 12pm and 12am, not "noon" or "midnight". |
+| 9B.2c | Times — ranges | am/pm for both times, hyphen with no spaces (7am-8am not 7-8am). |
+| 9B.2d | Times — "minutes" | Use "minutes" not "mins" unless space is very limited. |
 | 9B.3 | Numbers | Numerals by default, commas for thousands, % symbol |
 | 9B.4 | Capitalisation | Sentence case everywhere except nav menus, breadcrumbs, product names |
 | 9B.5 | Pronouns in UI | No "my" or "your" in headings, buttons, menus, labels — only in body copy |
 | 9B.6 | Brand terms | Clubcard, Clubcard Prices, Clubcard points (specific capitalisation); always "collect" points |
 | 9B.7 | Compound words | checkout (noun) vs check out (verb); sign in (verb) vs sign-in (noun/adjective); set up (verb) vs setup (noun); in-store (always hyphenated); upfront (one word) |
 | 9B.8 | Oxford comma | Do not use oxford commas (British English style) |
+| 9B.9 | Section name capitalisation | Capitalise specific section names ("Go to your Favourites") but lowercase in running copy ("Shop your favourites") |
 
-**Required output:** Two numbered checklists (9A.1-9A.20 and 9B.1-9B.8). Each must show PASS (term not found / formatting correct), ISSUE (with offending text quoted), or N/A. No item may be skipped.
+**9C — Term distinction and brand format checks.** These terms have specific usage rules. If any appear in the content, verify they are used correctly:
+
+| # | Term | Rule |
+|---|------|------|
+| 9C.1 | Click+Collect | Always "Click+Collect" — no spaces, no ampersand ("Click & Collect"), never abbreviate to "C+C" in customer-facing copy |
+| 9C.2 | choose vs select | "Choose" = customer decisions not tied to UI (choosing a meal deal). "Select" = tappable/clickable UI decisions (select a delivery slot) |
+| 9C.3 | continue vs next | "Continue" = when consent is needed or choices will be made. "Next" = shorter steps or going through content (onboarding) |
+| 9C.4 | view vs show | "View" = navigates to a different page ("View all"). "Show" = reveals content on the same page ("Show more") |
+| 9C.5 | cost vs price | "Price" = what something costs before discounts. "Cost" = what the customer actually pays |
+| 9C.6 | product vs item | "Product" = a unique thing we stock. "Item" = quantity of products (3 items of the same product) |
+| 9C.7 | checkout vs check out | "Checkout" = noun (the place/process: "before checkout"). "Check out" = verb (the action: "check out our offers") |
+| 9C.8 | sign in vs sign-in | "Sign in" = verb (two words: "Sign in to continue"). "Sign-in" = noun/adjective (hyphenated: "the sign-in screen") |
+| 9C.9 | set up vs setup | "Set up" = verb ("Set up your account"). "Setup" = noun/adjective ("Your account setup is complete") |
+| 9C.10 | Clubcard terms | "Clubcard" (one word, capital C). "Clubcard Prices" (both capitalised). "Clubcard points" (lowercase p). Always "collect" points — never "earn" or "get" |
+
+**Required output:** Three numbered checklists (9A.1-9A.20, 9B.1-9B.9 including sub-rules 9B.1a/1b/2a/2b/2c/2d, and 9C.1-9C.10). Each must show PASS (term not found / formatting correct), ISSUE (with offending text quoted), or N/A. No item may be skipped.
 
 ---
 
@@ -399,7 +463,7 @@ After the issue report, produce this exact table. Every row must be filled. A re
 | 6    | Component-Specific Rules      | PASS / ISSUE / N/A | count  |
 | 7    | Accessibility and Inclusion   | PASS / ISSUE | count        |
 | 8    | Conversation Design Check     | PASS / ISSUE / N/A | count  |
-| 9    | Glossary and Formatting       | PASS / ISSUE | count        |
+| 9    | Glossary, Formatting, and Term Distinctions | PASS / ISSUE | count |
 | 10   | Report and Rewrite            | DONE         | total count  |
 ```
 
@@ -419,7 +483,7 @@ Go back to the original content (not your rewrite) and explicitly re-check these
 
 | # | Re-scan target | What to look for |
 |---|---------------|-----------------|
-| P2.1 | Every glossary term (9A.1-9A.20) | Read the content word by word one more time. Did you miss any forbidden terms? |
+| P2.1 | Every glossary term (9A.1-9A.20) and term distinction (9C.1-9C.10) | Read the content word by word one more time. Did you miss any forbidden terms or misused distinctions? |
 | P2.2 | Every CTA and button | Does it start with a verb? 2-4 words? Pass the "I want to..." test? |
 | P2.3 | Every link | Descriptive? No "click here"/"read more"? Makes sense out of context? Under 8 words? |
 | P2.4 | Passive voice | Re-run the "by monkeys" test on every sentence |
@@ -436,7 +500,8 @@ Go back to the original content (not your rewrite) and explicitly re-check these
 
 After Pass 2 on the original, re-read your Clean Rewrite from 10C and confirm it does not introduce any NEW violations. Specifically check:
 
-- No glossary term violations introduced in the rewrite
+- No glossary term violations introduced in the rewrite (9A.1-9A.20)
+- No term distinction errors introduced in the rewrite (9C.1-9C.10)
 - No passive voice introduced in the rewrite
 - No "please", "sorry", "successfully", "just", "only", "simply" added
 - Sentence case maintained in all UI elements
