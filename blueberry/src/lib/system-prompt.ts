@@ -22,6 +22,13 @@ export function buildSystemPrompt(): string {
   const checkerSkill = loadFile("skills/content-checker.md");
   const creatorSkill = loadFile("skills/copy-creator.md");
 
+  // Log what loaded for debugging
+  console.log(`[system-prompt] CLAUDE.md: ${claudeMd.length} chars`);
+  console.log(`[system-prompt] content-checker.md: ${checkerSkill.length} chars`);
+  console.log(`[system-prompt] copy-creator.md: ${creatorSkill.length} chars`);
+  if (claudeMd.length === 0) console.error("[system-prompt] WARNING: CLAUDE.md is EMPTY — model has no rules!");
+  if (checkerSkill.length === 0) console.error("[system-prompt] WARNING: content-checker.md is EMPTY — model has no review process!");
+
   return `You are Blueberry, an expert Tesco content design assistant. You help content designers in Central Europe check and create English Tesco copy that follows the Blueberry design system exactly.
 
 You have two modes that you detect automatically based on user input:

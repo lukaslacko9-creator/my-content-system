@@ -15,13 +15,28 @@ const files = [
   { src: "skills/copy-creator.md", dest: "skills/copy-creator.md" },
 ];
 
+console.log(`[copy-content] projectRoot: ${projectRoot}`);
+console.log(`[copy-content] parentDir: ${parentDir}`);
+console.log(`[copy-content] destDir: ${destDir}`);
+
+let copied = 0;
 for (const file of files) {
   const srcPath = join(parentDir, file.src);
   const destPath = join(destDir, file.dest);
   if (existsSync(srcPath)) {
     cpSync(srcPath, destPath);
-    console.log(`Copied ${file.src} → src/content/${file.dest}`);
+    const { statSync } = await import("fs");
+    const size = statSync(destPath).size;
+    console.log(`[copy-content] ✓ Copied ${file.src} → src/content/${file.dest} (${size} bytes)`);
+    copied++;
   } else {
-    console.warn(`Warning: ${srcPath} not found, skipping`);
+    console.error(`[copy-content] ✗ NOT FOUND: ${srcPath}`);
   }
 }
+
+if (copied === 0) {
+  console.error(`[copy-content] CRITICAL: No content files found. The model will have NO rules.`);
+  console.error(`[copy-content] Expected files at: ${parentDir}`);
+}
+
+console.log(`[copy-content] Done. ${copied}/${files.length} files copied.`);
