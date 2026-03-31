@@ -7,7 +7,7 @@ import { ChatMessageBubble } from "@/components/chat-message";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const { messages, isStreaming, error, sendMessage, clearMessages } =
+  const { messages, isStreaming, error, reviewStatus, sendMessage, clearMessages } =
     useChat();
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -129,7 +129,18 @@ export default function Home() {
                   {messages.map((msg) => (
                     <ChatMessageBubble key={msg.id} message={msg} />
                   ))}
+                  {isStreaming && reviewStatus && (
+                    <div className="flex justify-start">
+                      <div className="rounded-2xl bg-muted/50 px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className="h-2 w-2 animate-pulse rounded-full bg-blue-500" />
+                          <span className="text-xs text-muted-foreground">{reviewStatus}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   {isStreaming &&
+                    !reviewStatus &&
                     messages[messages.length - 1]?.role === "assistant" &&
                     !messages[messages.length - 1]?.content && (
                       <div className="flex justify-start">

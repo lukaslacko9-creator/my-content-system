@@ -14,6 +14,7 @@ export function useChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [reviewStatus, setReviewStatus] = useState<string | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   const sendMessage = useCallback(
@@ -86,7 +87,11 @@ export function useChat() {
             try {
               const parsed = JSON.parse(data);
               if (parsed.error) throw new Error(parsed.error);
+              if (parsed.status) {
+                setReviewStatus(parsed.status);
+              }
               if (parsed.text) {
+                setReviewStatus(null);
                 setMessages((prev) => {
                   const updated = [...prev];
                   const last = updated[updated.length - 1];
@@ -114,6 +119,7 @@ export function useChat() {
         setMessages((prev) => prev.filter((m) => m.id !== assistantMessage.id));
       } finally {
         setIsStreaming(false);
+        setReviewStatus(null);
         abortRef.current = null;
       }
     },
@@ -124,7 +130,8 @@ export function useChat() {
     abortRef.current?.abort();
     setMessages([]);
     setError(null);
+    setReviewStatus(null);
   }, []);
 
-  return { messages, isStreaming, error, sendMessage, clearMessages };
+  return { messages, isStreaming, error, reviewStatus, sendMessage, clearMessages };
 }
