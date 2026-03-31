@@ -118,14 +118,15 @@ Run through EVERY rule in this table. Check each one individually against the co
 | # | Rule | Check for |
 |---|------|-----------|
 | 5.1 | Active voice | No passive constructions. Use the "by monkeys" test — if you can add "by monkeys" to the end and it makes sense, it's passive. |
-| 5.2 | Present tense | "Enter your email" not "You will need to enter your email" |
+| 5.2 | Present tense | Use present tense, not future. Flag: "You will need to..." (→ just state the action), "We will send you..." (→ "We'll send you..." or "You'll get..."), "You will be able to..." (→ "You can..."), "This will allow you to..." (→ "This lets you..."). Future tense adds unnecessary words and distance. |
 | 5.3 | Verb-led CTAs | Buttons, links, and headings should start with a verb |
 | 5.4 | Sentence length | Aim for 15 words, flag anything over 25 |
 | 5.5 | Readability | Target Hemingway grade 6 or lower |
-| 5.6 | Plain language | Short words over long (buy not purchase, help not assist, around not approximately). No mathematical symbols or notation (×, +, ÷, =, >, <) — use plain English words instead ("double" not "2×", "more than" not ">"). Symbols are ambiguous for screen readers and exclude people with low numeracy. |
+| 5.6 | Plain language | Use short, common words. Flag ANY of these formal/complex words and replace: purchase→buy, assist/assistance→help, approximately→about/around, require→need, obtain→get, inform→tell, commence→start/begin, utilise→use, prior to→before, sufficient→enough, additional→more/extra, currently→now, ensure→make sure, regarding→about, subsequently→then/next, terminate→end/stop, endeavour→try, proceed→go/continue, submit→send/confirm, navigate→go to, access (verb)→go to/open, "in order to"→to, "at this time"→now, "in the event of"→if. Also: no mathematical symbols or notation (×, +, ÷, =, >, <) — use words ("double" not "2×", "more than" not ">"). |
 | 5.7 | No Latin | No e.g., i.e., etc., per annum — use "for example", "such as", "that is", "each year" |
 | 5.8 | No ampersands | Use "and" except in brand names or very tight spaces |
 | 5.9 | No "and/or" | Rewrite for clarity |
+| 5.9a | No slash as "or" | Don't use "/" to mean "or" or "and" — "delivery/collection" should be "delivery or collection". Slashes are ambiguous, hard for screen readers, and not plain English. Exception: established terms like Click+Collect. |
 | 5.10 | Contractions | Should be used for natural tone ("You'll" not "You will") unless awkward |
 | 5.11 | Sentence case | Only first word and proper nouns capitalised. No Title Case. No BLOCK CAPITALS. |
 | 5.12 | No "now" | "Apply" not "Apply now" unless contrasting with "apply later" |
@@ -135,14 +136,16 @@ Run through EVERY rule in this table. Check each one individually against the co
 | 5.16 | No "please" | Don't say "please" if the action isn't optional — state what the user needs to do directly |
 | 5.17 | No "sorry" (unless our fault) | Only apologise when something went wrong on our end. Don't apologise for user errors. |
 | 5.18 | No "successfully" | Unnecessary. "Your password was reset" not "Your password was successfully reset" |
-| 5.19 | No "just/only/simply" in directions | Sounds dismissive or patronising |
+| 5.19 | No dismissive or condescending words | Flag: "just", "only", "simply", "obviously", "clearly", "of course", "basically", "as you know", "naturally", "needless to say". All sound patronising or assume user knowledge. |
 | 5.20 | No possessive pronouns in UI elements | No "my" or "your" in headings, buttons, menus, labels — only in body copy |
 | 5.21 | No questions in headings | "Frontloading headings" not "Should I frontload my headings?" — statements outperform questions |
 | 5.22 | Explain technical terms | If a technical term is used, it must be explained the first time it appears |
 | 5.23 | Avoid FAQs | Don't use FAQ format — put important information in-journey where users need it |
 | 5.24 | Bullet point structure | Bullets must: complete a sentence, be front-loaded with key info, start with the same language element (all verbs, or all nouns), use correct grammar |
+| 5.25 | No negative framing | Don't lead with what the user can't do. Flag: "Don't forget to..." (→ just state the action), "You can't..." (→ rephrase positively or state what they can do), "Unfortunately..." (→ state the situation and the fix), "We're unable to..." (→ "We can't..." or state alternatives). Focus on the path forward, not the obstacle. |
+| 5.26 | No vague error language | Flag: "Something went wrong" (too vague — say what happened), "Error 404" or any error codes (users don't speak HTTP), "Request failed"/"Operation failed" (failure family — say what to do instead), "An unexpected error occurred" (meaningless to users). Every error must say what happened AND what to do next. |
 
-**Required output:** A numbered checklist (5.1 through 5.24). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
+**Required output:** A numbered checklist (5.1 through 5.26, including 5.9a). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
 
 ---
 
@@ -169,7 +172,7 @@ Based on the content type(s) from Step 1, apply ALL relevant rules below. If a c
 |---|------|
 | 6L.1 | Under 5 words ideally, 6-8 max |
 | 6L.2 | Front-load meaning |
-| 6L.3 | No "Click here", "Read more", "More info" |
+| 6L.3 | No vague links: "Click here", "Read more", "More info", "Learn more" (bare). "Learn more about [topic]" is OK but bare "Learn more" fails the out-of-context test. |
 | 6L.4 | Use correct verb pattern: "View..." (information), "Go to..." (dashboard), "Browse..." (collections), "Find..." (discovery), "Learn more about..." (educational), "Read..." (long-form) |
 | 6L.5 | No mid-sentence links |
 | 6L.6 | Link text must match destination |
@@ -494,8 +497,12 @@ Go back to the original content (not your rewrite) and explicitly re-check these
 | P2.9 | Oxford commas | Scan every list — no oxford commas (British English style) |
 | P2.10 | Heteronyms | Check for: read, live, close, content, invalid — can any be misread? |
 | P2.11 | Symbols and notation | Scan for any mathematical symbols (×, +, ÷, =, >, <, %, #, @) or notation used in place of plain English words. "Double" not "2×", "more than" not ">", "number" not "#". % symbol is OK for percentages (25%). |
+| P2.12 | Formal/complex words | Re-scan for: purchase, assist, approximately, require, obtain, inform, commence, utilise, prior to, sufficient, additional, currently, ensure, regarding, subsequently, terminate, endeavour, proceed, submit, navigate, access (as verb). Each should be replaced with a simpler word. |
+| P2.13 | Slashes as words | Scan for "/" used to mean "or" or "and" (delivery/collection, yes/no, on/off). Must be written out. |
+| P2.14 | Negative framing | Scan for "Don't forget", "You can't", "Unfortunately", "We're unable to", "We regret". Rephrase positively. |
+| P2.15 | Condescending words | Scan for "obviously", "clearly", "of course", "basically", "as you know", "naturally", "needless to say" — in addition to "just", "only", "simply" from P2.5. |
 
-**Required output:** Numbered checklist P2.1-P2.11. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
+**Required output:** Numbered checklist P2.1-P2.15. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
 
 ### Rewrite Validation
 
