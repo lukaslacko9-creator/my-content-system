@@ -13,6 +13,7 @@ const files = [
   { src: "CLAUDE.md", dest: "CLAUDE.md" },
   { src: "skills/content-checker.md", dest: "skills/content-checker.md" },
   { src: "skills/copy-creator.md", dest: "skills/copy-creator.md" },
+  { src: "skills/transcreator.md", dest: "skills/transcreator.md" },
 ];
 
 console.log(`[copy-content] projectRoot: ${projectRoot}`);

@@ -258,6 +258,16 @@ Group by severity using these labels:
 
 The complete rewritten content with ALL issues fixed, ready to copy. Use a code block.
 
+CRITICAL REWRITE RULES — apply these to the rewrite even if the review missed them:
+- "home delivery" → "delivery" (always — "home" is redundant)
+- "unlock" → "get" or "start" (always — marketing speak)
+- "fees" → "charges" (always — Tesco glossary)
+- "2x" or "2×" → "double" (always — plain English, no math symbols)
+- "3x" or "3×" → "triple" (always — plain English)
+- No Title Case in body copy, bullets, or headings (sentence case only)
+- "log in" → "sign in" (always)
+- "click" or "tap" → "select" (always)
+
 ## Summary
 
 2-3 sentence summary of the key changes and why they matter.

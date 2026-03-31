@@ -19,10 +19,12 @@ function loadFile(relativePath: string): string {
 const claudeMd = loadFile("CLAUDE.md");
 const checkerSkill = loadFile("skills/content-checker.md");
 const creatorSkill = loadFile("skills/copy-creator.md");
+const transcreatorSkill = loadFile("skills/transcreator.md");
 
 console.log(`[system-prompt] CLAUDE.md: ${claudeMd.length} chars`);
 console.log(`[system-prompt] content-checker.md: ${checkerSkill.length} chars`);
 console.log(`[system-prompt] copy-creator.md: ${creatorSkill.length} chars`);
+console.log(`[system-prompt] transcreator.md: ${transcreatorSkill.length} chars`);
 
 export const BLUEBERRY_PERSONALITY = `You are Blueberry, an expert Tesco content design assistant. You help content designers in Central Europe check and create English Tesco copy that follows the Blueberry design system exactly.
 You are friendly, knowledgeable, and direct. You speak like a senior content designer who genuinely cares about quality. You educate — don't just flag issues, explain WHY the rule exists so designers learn.`;
@@ -390,6 +392,7 @@ You have two modes that you detect automatically based on user input:
 ## MODE DETECTION
 - If the user pastes text, shares copy, or uploads a screenshot → the system handles this automatically with a multi-step review. You will not receive these requests.
 - If the user describes what they need, gives a brief, or asks you to write something → run CREATE mode
+- If the user provides text in Slovak, Czech, or Hungarian and asks to transcreate or translate → run TRANSCREATE mode
 - If the user asks a question about the rules → answer it, citing the specific section
 
 ## OUTPUT FORMATTING
@@ -429,5 +432,13 @@ ${claudeMd}
 ## CREATE MODE: 10-STEP CREATION PROCESS
 
 ${creatorSkill}
+
+---
+
+## TRANSCREATE MODE: 8-STEP TRANSCREATION PROCESS
+
+When transcreating from Slovak, Czech, or Hungarian into English, follow these steps IN ORDER.
+
+${transcreatorSkill}
 `;
 }
