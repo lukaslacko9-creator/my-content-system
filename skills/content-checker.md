@@ -5,11 +5,35 @@ description: Automatically reviews any content against the Tesco Blueberry conte
 
 # Content Checker
 
-Review all content against the Blueberry design system rules defined in CLAUDE.md. Run every step in order. Do not skip steps — each catches different categories of issues.
+Review all content against the Blueberry design system rules defined in CLAUDE.md. This is a two-pass review. Run every step in order. Do not skip steps — each catches different categories of issues.
 
-## Step 1: Classify the Content
+## Enforcement Protocol
 
-Before checking anything, identify:
+**This review is invalid unless ALL of the following are true:**
+
+1. Every step (1-10) has a written output block — even if the output is "No issues found"
+2. The Step 10 report includes a complete Compliance Matrix with all 10 steps marked
+3. Pass 2 (Step 10b) has been completed after the main review
+4. No step references "see above" or "as before" — each step must contain its own findings
+
+**If reviewing a screenshot or image:**
+- First, extract ALL visible text into a plain text block. Label it "Extracted text from screenshot"
+- Include UI element types (button, link, heading, body, label, etc.) for each piece of text
+- Flag any text that is partially obscured, truncated, or unclear — do not guess
+- Only review the extracted text. If extraction is uncertain, state what is unclear before proceeding
+
+**If reviewing multiple screens, pages, or a flow:**
+- Number each screen/page (Screen 1, Screen 2, etc.)
+- Run the full 10-step review for EACH screen individually
+- After individual reviews, run one additional cross-screen consistency check: are the same terms, patterns, and tone used throughout the flow?
+
+---
+
+## PASS 1: Full Review
+
+### Step 1: Classify the Content
+
+Before checking anything, identify and write out:
 
 - **Content type:** CTA/button, link, heading, body copy, error message, warning, success message, info message, amend message, modal, popover, loading spinner, rating, push notification, email, chatbot/AI response, help article, form label, tooltip, or other
 - **Platform context:** app, web, mWeb, self-service checkout, colleague tool, chatbot, voice assistant
@@ -17,9 +41,13 @@ Before checking anything, identify:
 
 This classification determines which component-specific rules apply in later steps.
 
-## Step 2: Principles Scan
+**Required output:** State the content type, platform, and emotional context explicitly. If multiple content types are present, list every one — each will be checked against its component rules in Step 6.
 
-Check the content against all 5 principles. For each, ask:
+---
+
+### Step 2: Principles Scan
+
+Check the content against ALL 5 principles. For each, write a finding:
 
 - **HUMAN** — Does it sound like how people actually speak? Would you say this to a friend?
 - **CLEAR** — Are the words simple and easy to understand? Is there any ambiguity?
@@ -27,9 +55,11 @@ Check the content against all 5 principles. For each, ask:
 - **HELPFUL** — Does it have a clear purpose? Does it help the user get their job done?
 - **ENGAGING** — Does it add value without getting in the way?
 
-Flag any content that violates a principle. Cite the principle by name.
+**Required output:** 5 findings, one per principle. Each must say PASS or ISSUE with explanation. No principle may be omitted.
 
-## Step 3: Voice and Tone Audit
+---
+
+### Step 3: Voice and Tone Audit
 
 Based on the emotional context identified in Step 1:
 
@@ -47,7 +77,11 @@ Based on the emotional context identified in Step 1:
 
 3. Flag any miscalibration with the specific context and what the tone should be.
 
-## Step 4: Content Purpose Check
+**Required output:** State the expected tone position, the actual tone position, and whether they match. PASS or ISSUE.
+
+---
+
+### Step 4: Content Purpose Check
 
 Every piece of UX content should serve at least one of these 4 purposes:
 
@@ -61,222 +95,365 @@ Check:
 - Do CTAs complete the sentence "I want to..."? If not, rewrite.
 - Is the content consistent with patterns elsewhere in the experience? Would mixing this with surrounding content force users to think about the words instead of their task?
 
-Flag content that serves no clear purpose, CTAs that don't pass the "I want to..." test, or content that breaks established patterns.
+**Required output:** State which purpose(s) the content serves. Run the "I want to..." test on every CTA/button/link and write the result. PASS or ISSUE per element.
 
-## Step 5: Writing Rules Check
+---
 
-Run through each of these mechanical rules:
+### Step 5: Writing Rules Check
 
-| Rule | Check for |
-|------|-----------|
-| Active voice | No passive constructions. Use the "by monkeys" test — if you can add "by monkeys" to the end and it makes sense, it's passive. |
-| Present tense | "Enter your email" not "You will need to enter your email" |
-| Verb-led CTAs | Buttons, links, and headings should start with a verb |
-| Sentence length | Aim for 15 words, flag anything over 25 |
-| Readability | Target Hemingway grade 6 or lower |
-| Plain language | Short words over long (buy not purchase, help not assist, around not approximately) |
-| No Latin | No e.g., i.e., etc., per annum — use "for example", "such as", "that is", "each year" |
-| No ampersands | Use "and" except in brand names or very tight spaces |
-| No "and/or" | Rewrite for clarity |
-| Contractions | Should be used for natural tone ("You'll" not "You will") unless awkward |
-| Sentence case | Only first word and proper nouns capitalised. No Title Case. No BLOCK CAPITALS. |
-| No "now" | "Apply" not "Apply now" unless contrasting with "apply later" |
-| No idioms/metaphors | Avoid figures of speech that confuse non-native speakers |
-| Scannable | Headings, bullets, bold, short paragraphs used appropriately |
-| Consistent terminology | Same word for same concept throughout |
+Run through EVERY rule in this table. Check each one individually against the content:
 
-## Step 6: Component-Specific Rules
+| # | Rule | Check for |
+|---|------|-----------|
+| 5.1 | Active voice | No passive constructions. Use the "by monkeys" test — if you can add "by monkeys" to the end and it makes sense, it's passive. |
+| 5.2 | Present tense | "Enter your email" not "You will need to enter your email" |
+| 5.3 | Verb-led CTAs | Buttons, links, and headings should start with a verb |
+| 5.4 | Sentence length | Aim for 15 words, flag anything over 25 |
+| 5.5 | Readability | Target Hemingway grade 6 or lower |
+| 5.6 | Plain language | Short words over long (buy not purchase, help not assist, around not approximately) |
+| 5.7 | No Latin | No e.g., i.e., etc., per annum — use "for example", "such as", "that is", "each year" |
+| 5.8 | No ampersands | Use "and" except in brand names or very tight spaces |
+| 5.9 | No "and/or" | Rewrite for clarity |
+| 5.10 | Contractions | Should be used for natural tone ("You'll" not "You will") unless awkward |
+| 5.11 | Sentence case | Only first word and proper nouns capitalised. No Title Case. No BLOCK CAPITALS. |
+| 5.12 | No "now" | "Apply" not "Apply now" unless contrasting with "apply later" |
+| 5.13 | No idioms/metaphors | Avoid figures of speech that confuse non-native speakers |
+| 5.14 | Scannable | Headings, bullets, bold, short paragraphs used appropriately |
+| 5.15 | Consistent terminology | Same word for same concept throughout |
+| 5.16 | No "please" | Don't say "please" if the action isn't optional — state what the user needs to do directly |
+| 5.17 | No "sorry" (unless our fault) | Only apologise when something went wrong on our end. Don't apologise for user errors. |
+| 5.18 | No "successfully" | Unnecessary. "Your password was reset" not "Your password was successfully reset" |
+| 5.19 | No "just/only/simply" in directions | Sounds dismissive or patronising |
+| 5.20 | No possessive pronouns in UI elements | No "my" or "your" in headings, buttons, menus, labels — only in body copy |
 
-Based on the content type from Step 1, apply the relevant rules:
+**Required output:** A numbered checklist (5.1 through 5.20). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
+
+---
+
+### Step 6: Component-Specific Rules
+
+Based on the content type(s) from Step 1, apply ALL relevant rules below. If a content type has no section here, write "No component-specific rules for [type]".
 
 **Buttons:**
-- 2-4 words max
-- Start with a verb in present tense
-- Sentence case
-- No figurative language
-- Must make sense without surrounding context
-- "Sign in" not "Log in"
+
+| # | Rule |
+|---|------|
+| 6B.1 | 2-4 words max |
+| 6B.2 | Start with a verb in present tense |
+| 6B.3 | Sentence case |
+| 6B.4 | No figurative language |
+| 6B.5 | Must make sense without surrounding context |
+| 6B.6 | "Sign in" not "Log in" |
 
 **Links:**
-- Under 5 words ideally, 6-8 max
-- Front-load meaning
-- No "Click here", "Read more", "More info"
-- Use correct verb pattern: "View..." (information), "Go to..." (dashboard), "Browse..." (collections), "Find..." (discovery), "Learn more about..." (educational), "Read..." (long-form)
-- No mid-sentence links
-- Link text must match destination
+
+| # | Rule |
+|---|------|
+| 6L.1 | Under 5 words ideally, 6-8 max |
+| 6L.2 | Front-load meaning |
+| 6L.3 | No "Click here", "Read more", "More info" |
+| 6L.4 | Use correct verb pattern: "View..." (information), "Go to..." (dashboard), "Browse..." (collections), "Find..." (discovery), "Learn more about..." (educational), "Read..." (long-form) |
+| 6L.5 | No mid-sentence links |
+| 6L.6 | Link text must match destination |
 
 **Modals:**
-- Heading + first sentence must state what's happening immediately
-- No "Yes" / "No" buttons — use specific action verbs
-- Avoid cancel confusion — use "Keep [thing]", "Never mind", or "Not now"
-- Brevity over personality
-- Extra concise for native iOS/Android modals
+
+| # | Rule |
+|---|------|
+| 6M.1 | Heading + first sentence must state what's happening immediately |
+| 6M.2 | No "Yes" / "No" buttons — use specific action verbs |
+| 6M.3 | Avoid cancel confusion — use "Keep [thing]", "Never mind", or "Not now" |
+| 6M.4 | Brevity over personality |
+| 6M.5 | Extra concise for native iOS/Android modals |
 
 **Messaging (Error):**
-- Calm language — no "failure", "broken", or even "error"
-- Never blame the user
-- Structure: heading (what's wrong) + body (why + how to fix) + CTA (action)
-- Specific but relevant — user language, not technical
+
+| # | Rule |
+|---|------|
+| 6E.1 | Calm language — no "failure", "broken", or even "error" |
+| 6E.2 | Never blame the user |
+| 6E.3 | Structure: heading (what's wrong) + body (why + how to fix) + CTA (action) |
+| 6E.4 | Specific but relevant — user language, not technical |
 
 **Messaging (Warning):**
-- Go light on "please" and "sorry"
-- Don't say "please" if the action isn't optional
-- Don't apologise for things that aren't our fault
-- No capitals or exclamation marks for emphasis
-- Tell them what to do next
+
+| # | Rule |
+|---|------|
+| 6W.1 | Go light on "please" and "sorry" |
+| 6W.2 | Don't say "please" if the action isn't optional |
+| 6W.3 | Don't apologise for things that aren't our fault |
+| 6W.4 | No capitals or exclamation marks for emphasis |
+| 6W.5 | Tell them what to do next |
 
 **Messaging (Success):**
-- No "successfully" — it rarely adds anything
-- Positive confirmation of what the user did
-- Add delight only if it doesn't compromise clarity
+
+| # | Rule |
+|---|------|
+| 6S.1 | No "successfully" — it rarely adds anything |
+| 6S.2 | Positive confirmation of what the user did |
+| 6S.3 | Add delight only if it doesn't compromise clarity |
 
 **Messaging (Information):**
-- Use sparingly — only truly needed information
-- Link to more detail when space is limited
+
+| # | Rule |
+|---|------|
+| 6I.1 | Use sparingly — only truly needed information |
+| 6I.2 | Link to more detail when space is limited |
 
 **Messaging (Amend):**
-- Include deadline clearly
-- No "hurry" or "don't miss out" — avoid anxiety
-- If you say they can do something, make sure they can
+
+| # | Rule |
+|---|------|
+| 6A.1 | Include deadline clearly |
+| 6A.2 | No "hurry" or "don't miss out" — avoid anxiety |
+| 6A.3 | If you say they can do something, make sure they can |
 
 **Popovers:**
-- 1-3 lines max
-- No full stops in headings; in body only if >8 words or multiple sentences
-- Only add info that isn't already on the page
-- Default to body-copy-only — heading/button only if genuinely needed
+
+| # | Rule |
+|---|------|
+| 6P.1 | 1-3 lines max |
+| 6P.2 | No full stops in headings; in body only if >8 words or multiple sentences |
+| 6P.3 | Only add info that isn't already on the page |
+| 6P.4 | Default to body-copy-only — heading/button only if genuinely needed |
 
 **Loading spinners:**
-- Present tense ("Updating your basket" not "We're going to update your basket")
-- Specific, not generic ("Verifying card details" not "Loading")
-- Brief — a few words or one sentence
-- Time expectations only if reliable
-- Personality OK for rewards/fun contexts, not for payments/sensitive data
+
+| # | Rule |
+|---|------|
+| 6LS.1 | Present tense ("Updating your basket" not "We're going to update your basket") |
+| 6LS.2 | Specific, not generic ("Verifying card details" not "Loading") |
+| 6LS.3 | Brief — a few words or one sentence |
+| 6LS.4 | Time expectations only if reliable |
+| 6LS.5 | Personality OK for rewards/fun contexts, not for payments/sensitive data |
 
 **Ratings:**
-- Neutral tone — never leading
-- Brief — not the user's primary goal
-- Label clearly what's being rated
-- No emotionally-charged star descriptions
+
+| # | Rule |
+|---|------|
+| 6R.1 | Neutral tone — never leading |
+| 6R.2 | Brief — not the user's primary goal |
+| 6R.3 | Label clearly what's being rated |
+| 6R.4 | No emotionally-charged star descriptions |
 
 **Emoji (if present):**
-- Placed after text, not before or mid-sentence
-- No repeated emojis
-- Reinforces meaning, never replaces words
-- Works in both light and dark mode
-- Popular, widely understood emojis only
-- No facial expressions unless universally understood
 
-## Step 7: Accessibility and Inclusion Check
+| # | Rule |
+|---|------|
+| 6EM.1 | Placed after text, not before or mid-sentence |
+| 6EM.2 | No repeated emojis |
+| 6EM.3 | Reinforces meaning, never replaces words |
+| 6EM.4 | Works in both light and dark mode |
+| 6EM.5 | Popular, widely understood emojis only |
+| 6EM.6 | No facial expressions unless universally understood |
 
-**Accessibility:**
-- Links make sense out of context (screen reader users skip between links)
-- All links on a page are unique
-- Headings use correct hierarchy (H1 → H2 → H3, never skip)
-- Headings under 65 characters
-- All images have appropriate alt text (clear, accurate, concise)
-- No images of text
-- Forms have descriptive labels, no placeholder text
-- Errors below their form field, blame-free, solution-focused
-- No directional language ("above", "below", "left", "right")
-- No sensory-only instructions ("tap the green button")
-- Use "select" not "click" or "tap"
-- Watch for heteronyms (read, live, close, content, invalid) — replace with unambiguous alternatives
-- Stick to commas and full stops — avoid semicolons, dashes, brackets, asterisks
-- Avoid abbreviations except universally understood ones (PDF, FAQ)
-- Captions on all video, transcripts for audio
-- Audio descriptions for videos with important visuals
+**Required output:** Name each component type being checked and produce a numbered checklist using the IDs above (e.g., 6B.1: PASS). Each rule must show PASS, ISSUE (with offending text), or N/A. If no component-specific rules apply, state that explicitly.
 
-**Inclusive language:**
-- Gender-neutral pronouns (they, you, we)
-- No "manpower", "mankind" — use "staffing", "humankind"
-- "Attended/unattended" not "manned/unmanned"
-- "Blocklist/allowlist" not "blacklist/whitelist"
-- "Primary/main/source" not "master"
-- "Inactive" or "not available" not "disabled" (for UI states)
-- No "differently abled"
-- No "fast/quick/easy" — use specific timeframes ("this usually takes 2 minutes")
-- Person-first language ("disabled people" not "the disabled")
-- No negative framing ("suffering from", "confined to a wheelchair")
-- Don't call characters like à or š "special"
-- Diverse names in examples
-- No black/white/dark/light as value-laden metaphors (dark mode/light mode are fine)
+---
 
-**Audience-specific checks:**
-- If content targets elderly users → extra attention to cognitive load, font readability
-- If deaf users may encounter it → captions, visual alerts, plain language (English may be second language)
-- If blind users → alt text, descriptive links, correct heading hierarchy
-- If cognitive disabilities → visible instructions, no flashing, simple language, clean layout
+### Step 7: Accessibility and Inclusion Check
 
-## Step 8: Conversation Design Check
+**7A — Accessibility:**
 
-**Only apply if the content is for AI/chatbot/voice assistant.**
+Check every rule individually:
 
-- **Quality** — Is the information accurate and honest?
-- **Quantity** — Right amount of info? Not too little, not too much?
-- **Relation** — Relevant to the user's question? Stays on topic?
-- **Manner** — Organised, not rambling, clear language?
-- **One-breath test** — Can you say the response in one breath? If not, it's too long
-- **If it sounds written, rewrite it** — Read aloud; if it sounds like an essay, make it conversational
-- **Active voice** — "I'll ask you a few questions" not "You'll be asked a few questions"
-- **Simple words** — No jargon; a child should understand
-- **Consistent terminology** — Don't switch between "agent" and "person" and "colleague" mid-conversation
-- **Never blame the user** — Handle miscommunications gracefully
-- **Personality alignment** — Friendly, empathetic, helpful. Not jokey about serious issues.
+| # | Rule | Check for |
+|---|------|-----------|
+| 7A.1 | Descriptive links | Links make sense out of context (screen reader users skip between links) |
+| 7A.2 | Unique links | All links on a page are unique |
+| 7A.3 | Heading hierarchy | Correct hierarchy (H1 → H2 → H3, never skip) |
+| 7A.4 | Heading length | Under 65 characters |
+| 7A.5 | Alt text | All images have appropriate alt text (clear, accurate, concise) |
+| 7A.6 | No images of text | Use actual text, not images of text |
+| 7A.7 | Form labels | Descriptive labels, no placeholder text as labels |
+| 7A.8 | Error placement | Errors below their form field, blame-free, solution-focused |
+| 7A.9 | No directional language | No "above", "below", "left", "right" |
+| 7A.10 | No sensory-only instructions | No "tap the green button" — describe the function |
+| 7A.11 | Use "select" | Not "click" or "tap" |
+| 7A.12 | Heteronyms | Watch for read, live, close, content, invalid — replace with unambiguous alternatives |
+| 7A.13 | Simple punctuation | Stick to commas and full stops — avoid semicolons, dashes, brackets, asterisks |
+| 7A.14 | No abbreviations | Except universally understood (PDF, FAQ) |
+| 7A.15 | Video captions | Captions on all video, transcripts for audio |
+| 7A.16 | Audio descriptions | For videos with important visuals |
 
-## Step 9: Glossary and Formatting Compliance
+**7B — Inclusive language:**
 
-Check every term against the glossary:
+| # | Rule | Check for |
+|---|------|-----------|
+| 7B.1 | Gender-neutral | They, you, we — no "manpower", "mankind" |
+| 7B.2 | No gendered terms | "Attended/unattended" not "manned/unmanned" |
+| 7B.3 | No colour-coded language | "Blocklist/allowlist" not "blacklist/whitelist"; "primary/main" not "master" |
+| 7B.4 | Disability-aware UI language | "Inactive" or "not available" not "disabled" (for UI states) |
+| 7B.5 | No euphemisms | No "differently abled" |
+| 7B.6 | No speed assumptions | No "fast/quick/easy" — use specific timeframes |
+| 7B.7 | Person-first language | "Disabled people" not "the disabled" |
+| 7B.8 | No negative framing | No "suffering from", "confined to a wheelchair" |
+| 7B.9 | Respectful character references | Don't call characters like à or š "special" |
+| 7B.10 | Diverse examples | Diverse names if examples are used |
+| 7B.11 | No value-laden metaphors | No black/white/dark/light as value metaphors (dark mode/light mode are fine) |
 
-| Don't use | Use instead |
-|-----------|-------------|
-| log in / log out | sign in / sign out |
-| click / tap | select |
-| bank | card issuer |
-| reserve (a slot) | book (a slot) |
-| staff, workers | colleagues |
-| profile | account |
-| fees | charges |
-| assist, assistance | help |
-| help desk | service desk |
-| modify | change |
-| passcode, OTP, PIN code | code |
-| Marketplace partner | Marketplace seller / seller |
-| fraud, suspicious activity | "we couldn't take your payment" |
-| toggle | switch on / switch off |
-| enable / disable | switch on / switch off |
-| SMS | text |
-| thank you | thanks |
-| invalid | not working, not right, wrong |
-| Ok, okay, O.K. | OK |
-| just, only, simply (directions) | Remove — sounds patronising |
+**Required output:** Two numbered checklists (7A.1-7A.16 and 7B.1-7B.11). Each rule must show PASS, ISSUE (with offending text), or N/A (with reason). No rule may be skipped.
 
-**Formatting checks:**
-- Dates: "1 January 2000" not "01/01/2000" or "1st January"
-- Times: "1.30pm" not "1:30pm" or "1.30 pm" or "13:30"
-- Numbers: numerals by default, commas for thousands, % symbol
-- Capitalisation: sentence case everywhere except nav menus, breadcrumbs, product names
-- Pronouns: no "my" or "your" in UI elements (headings, buttons, menus, labels) — only in body copy when speaking to the user
-- Brand terms: Clubcard, Clubcard Prices, Clubcard points (specific capitalisation); always "collect" points
-- checkout (noun) vs check out (verb); sign in (verb) vs sign-in (noun/adjective); set up (verb) vs setup (noun)
+---
 
-## Step 10: Report and Rewrite
+### Step 8: Conversation Design Check
 
-For **every issue found**, provide:
+**Only apply if the content is for AI/chatbot/voice assistant. If not, write "N/A — not conversational UI" and move to Step 9.**
+
+| # | Rule | Check for |
+|---|------|-----------|
+| 8.1 | Quality | Is the information accurate and honest? |
+| 8.2 | Quantity | Right amount of info? Not too little, not too much? |
+| 8.3 | Relation | Relevant to the user's question? Stays on topic? |
+| 8.4 | Manner | Organised, not rambling, clear language? |
+| 8.5 | One-breath test | Can you say the response in one breath? If not, it's too long |
+| 8.6 | Sounds spoken | Read aloud — if it sounds like an essay, make it conversational |
+| 8.7 | Active voice | "I'll ask you a few questions" not "You'll be asked a few questions" |
+| 8.8 | Simple words | No jargon; a child should understand |
+| 8.9 | Consistent terminology | Don't switch terms mid-conversation |
+| 8.10 | Never blame user | Handle miscommunications gracefully |
+| 8.11 | Personality alignment | Friendly, empathetic, helpful. Not jokey about serious issues. |
+
+**Required output:** If applicable, numbered checklist 8.1-8.11 with PASS, ISSUE, or N/A per rule. If not applicable, state "N/A — not conversational UI".
+
+---
+
+### Step 9: Glossary and Formatting Compliance
+
+**9A — Glossary term scan.** Check EVERY term in the table below against ALL text in the content. Read through the content word by word looking for violations:
+
+| # | Don't use | Use instead |
+|---|-----------|-------------|
+| 9A.1 | log in / log out | sign in / sign out |
+| 9A.2 | click / tap | select |
+| 9A.3 | bank | card issuer |
+| 9A.4 | reserve (a slot) | book (a slot) |
+| 9A.5 | staff, workers | colleagues |
+| 9A.6 | profile | account |
+| 9A.7 | fees | charges |
+| 9A.8 | assist, assistance | help |
+| 9A.9 | help desk | service desk |
+| 9A.10 | modify | change |
+| 9A.11 | passcode, OTP, PIN code | code |
+| 9A.12 | Marketplace partner | Marketplace seller / seller |
+| 9A.13 | fraud, suspicious activity | "we couldn't take your payment" |
+| 9A.14 | toggle | switch on / switch off |
+| 9A.15 | enable / disable | switch on / switch off |
+| 9A.16 | SMS | text |
+| 9A.17 | thank you | thanks |
+| 9A.18 | invalid | not working, not right, wrong |
+| 9A.19 | Ok, okay, O.K. | OK |
+| 9A.20 | just, only, simply (directions) | Remove — sounds patronising |
+
+**9B — Formatting checks:**
+
+| # | Rule | Check for |
+|---|------|-----------|
+| 9B.1 | Dates | "1 January 2000" not "01/01/2000" or "1st January". No ordinals. |
+| 9B.2 | Times | "1.30pm" not "1:30pm" or "1.30 pm" or "13:30". 12-hour clock, full stop separator, no space before am/pm. |
+| 9B.3 | Numbers | Numerals by default, commas for thousands, % symbol |
+| 9B.4 | Capitalisation | Sentence case everywhere except nav menus, breadcrumbs, product names |
+| 9B.5 | Pronouns in UI | No "my" or "your" in headings, buttons, menus, labels — only in body copy |
+| 9B.6 | Brand terms | Clubcard, Clubcard Prices, Clubcard points (specific capitalisation); always "collect" points |
+| 9B.7 | Compound words | checkout (noun) vs check out (verb); sign in (verb) vs sign-in (noun/adjective); set up (verb) vs setup (noun); in-store (always hyphenated); upfront (one word) |
+| 9B.8 | Oxford comma | Do not use oxford commas (British English style) |
+
+**Required output:** Two numbered checklists (9A.1-9A.20 and 9B.1-9B.8). Each must show PASS (term not found / formatting correct), ISSUE (with offending text quoted), or N/A. No item may be skipped.
+
+---
+
+### Step 10: Report and Rewrite
+
+**10A — Issue Report**
+
+For **every issue found across all steps**, provide:
 
 1. **The problem** — what's wrong, with the specific text quoted
-2. **The rule** — which section of CLAUDE.md this violates
+2. **The rule** — which step and rule number this violates (e.g., "Step 5, Rule 5.7 — No Latin")
 3. **Why it matters** — the reason behind the rule (accessibility, cognitive load, brand consistency, etc.)
 4. **The rewrite** — a compliant version
 
 **Group issues by severity:**
 
-### Critical (must fix)
+**Critical (must fix)**
 Accessibility violations, inclusive language failures, blame-the-user errors, missing alt text, broken heading hierarchy, sensory-only instructions.
 
-### Important (should fix)
+**Important (should fix)**
 Principle violations, tone miscalibration, component structure errors, passive voice, missing CTA purpose, pattern inconsistency.
 
-### Style (nice to fix)
+**Style (nice to fix)**
 Glossary term mismatches, formatting inconsistencies, unnecessary words, suboptimal sentence length, capitalisation issues.
 
-**After the report:** provide a clean, fully rewritten version of the entire content with all issues resolved.
+**10B — Compliance Matrix**
+
+After the issue report, produce this exact table. Every row must be filled. A review missing any row is invalid.
+
+```
+| Step | Name                          | Result       | Issues found |
+|------|-------------------------------|--------------|--------------|
+| 1    | Classify the Content          | DONE         | N/A          |
+| 2    | Principles Scan               | PASS / ISSUE | count        |
+| 3    | Voice and Tone Audit          | PASS / ISSUE | count        |
+| 4    | Content Purpose Check         | PASS / ISSUE | count        |
+| 5    | Writing Rules Check           | PASS / ISSUE | count        |
+| 6    | Component-Specific Rules      | PASS / ISSUE / N/A | count  |
+| 7    | Accessibility and Inclusion   | PASS / ISSUE | count        |
+| 8    | Conversation Design Check     | PASS / ISSUE / N/A | count  |
+| 9    | Glossary and Formatting       | PASS / ISSUE | count        |
+| 10   | Report and Rewrite            | DONE         | total count  |
+```
+
+**10C — Clean Rewrite**
+
+Provide a clean, fully rewritten version of the entire content with all issues resolved. This must be a standalone block the user can copy directly.
+
+---
+
+## PASS 2: Targeted Re-scan
+
+After completing the full review above, run this second pass. Pass 2 catches the issues most commonly missed in Pass 1.
+
+### Re-scan Checklist
+
+Go back to the original content (not your rewrite) and explicitly re-check these specific items. For each, quote the relevant text and confirm the finding:
+
+| # | Re-scan target | What to look for |
+|---|---------------|-----------------|
+| P2.1 | Every glossary term (9A.1-9A.20) | Read the content word by word one more time. Did you miss any forbidden terms? |
+| P2.2 | Every CTA and button | Does it start with a verb? 2-4 words? Pass the "I want to..." test? |
+| P2.3 | Every link | Descriptive? No "click here"/"read more"? Makes sense out of context? Under 8 words? |
+| P2.4 | Passive voice | Re-run the "by monkeys" test on every sentence |
+| P2.5 | "please", "sorry", "successfully", "just", "only", "simply" | Scan for these specific words one more time |
+| P2.6 | Sentence case | Check every heading, button, and link — no Title Case, no BLOCK CAPITALS |
+| P2.7 | Dates, times, numbers | Check every instance against the formatting rules |
+| P2.8 | "click" or "tap" | Must be "select" |
+| P2.9 | Oxford commas | Scan every list — no oxford commas (British English style) |
+| P2.10 | Heteronyms | Check for: read, live, close, content, invalid — can any be misread? |
+
+**Required output:** Numbered checklist P2.1-P2.10. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
+
+### Rewrite Validation
+
+After Pass 2 on the original, re-read your Clean Rewrite from 10C and confirm it does not introduce any NEW violations. Specifically check:
+
+- No glossary term violations introduced in the rewrite
+- No passive voice introduced in the rewrite
+- No "please", "sorry", "successfully", "just", "only", "simply" added
+- Sentence case maintained in all UI elements
+- No oxford commas introduced
+- All CTAs still start with a verb and pass "I want to..." test
+- Tone is consistent with the context from Step 1
+
+**Required output:** State "REWRITE VALIDATED — no new issues introduced" or list any new issues found and provide a corrected final rewrite.
+
+---
+
+## Final Verdict
+
+After both passes, state one of:
+
+- **ALL CLEAR** — No issues found across both passes. Content is fully Blueberry-compliant.
+- **REVISED** — Issues were found and corrected. The Clean Rewrite is Blueberry-compliant.
+- **NEEDS DISCUSSION** — Some issues require user input (ambiguous context, competing rules, content strategy decisions).
+
+Include the total issue count broken down: Critical / Important / Style.
