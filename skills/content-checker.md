@@ -5,7 +5,96 @@ description: Automatically reviews any content against the Tesco Blueberry conte
 
 # Content Checker
 
-Review all content against the Blueberry design system rules defined in CLAUDE.md. This is a two-pass review. Run every step in order. Do not skip steps — each catches different categories of issues.
+Review all content against the Blueberry design system rules defined in CLAUDE.md.
+
+## MANDATORY OUTPUT FORMAT
+
+**YOU MUST PRODUCE YOUR RESPONSE IN EXACTLY THIS STRUCTURE. DO NOT SKIP TO A SUMMARY. DO NOT DO A FREEFORM REVIEW. FOLLOW THIS SKELETON:**
+
+```
+## Step 1: Content Inventory and Classification
+### 1A — Content Inventory
+| # | Element type | Text (exact quote) | Word count |
+|---|-------------|-------------------|------------|
+| 1 | ... | "..." | ... |
+[every element listed]
+
+[For screenshots: "Visual recheck complete — N elements found"]
+
+### 1B — Classification
+- Content types: ...
+- Platform: ...
+- Emotional context: ...
+
+## Step 2: Principles Scan
+- HUMAN: PASS / ISSUE — ...
+- CLEAR: PASS / ISSUE — ...
+- INCLUSIVE: PASS / ISSUE — ...
+- HELPFUL: PASS / ISSUE — ...
+- ENGAGING: PASS / ISSUE — ...
+
+## Step 3: Voice and Tone Audit
+- Expected tone: ...
+- Actual tone: ...
+- Result: PASS / ISSUE
+
+## Step 4: Content Purpose Check
+- Purpose served: ...
+- "I want to..." test: [per CTA]
+
+## Step 5: Writing Rules Check
+- 5.1: PASS / ISSUE / N/A
+- 5.2: PASS / ISSUE / N/A
+[... through 5.28]
+
+## Step 6: Component-Specific Rules
+[numbered rules per component type]
+
+## Step 7: Accessibility and Inclusion Check
+### 7A — Accessibility
+- 7A.1: PASS / ISSUE / N/A
+[... through 7A.22]
+### 7B — Inclusive language
+- 7B.1: PASS / ISSUE / N/A
+[... through 7B.14]
+
+## Step 8: Conversation Design Check
+[N/A or numbered 8.1-8.12]
+
+## Step 9: Glossary and Formatting
+### 9A — Glossary
+- 9A.1: PASS / ISSUE / N/A
+[... through 9A.20]
+### 9B — Formatting
+- 9B.1: PASS / ISSUE / N/A
+[... through 9B.9]
+### 9C — Term distinctions
+- 9C.1: PASS / ISSUE / N/A
+[... through 9C.10]
+
+## Step 10: Report and Rewrite
+### 10A — Issue Report
+[grouped by Critical / Important / Style]
+### 10B — Compliance Matrix
+[10-row table]
+### 10C — Clean Rewrite
+[full rewrite]
+
+## PASS 2: Re-scan
+- P2.1: CLEAR / CAUGHT
+[... through P2.17]
+
+### Rewrite Validation
+[validated or corrected]
+
+## Final Verdict
+[ALL CLEAR / REVISED / NEEDS DISCUSSION]
+[Critical: N / Important: N / Style: N]
+```
+
+**If your response does not follow this structure, it is INVALID. Do not produce a casual review with bullet points. Do not skip to findings. Start with the Content Inventory table.**
+
+---
 
 ## Enforcement Protocol
 
@@ -13,8 +102,9 @@ Review all content against the Blueberry design system rules defined in CLAUDE.m
 
 1. Every step (1-10) has a written output block — even if the output is "No issues found"
 2. The Step 10 report includes a complete Compliance Matrix with all 10 steps marked
-3. Pass 2 (Step 10b) has been completed after the main review
+3. Pass 2 has been completed after the main review
 4. No step references "see above" or "as before" — each step must contain its own findings
+5. The response starts with the Content Inventory table from Step 1A — if it doesn't, start over
 
 **If reviewing a screenshot or image:**
 - The screenshot goes through the SAME Step 1 Content Inventory as any other input — no shortcut
