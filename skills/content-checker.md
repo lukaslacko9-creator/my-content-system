@@ -144,8 +144,10 @@ Run through EVERY rule in this table. Check each one individually against the co
 | 5.24 | Bullet point structure | Bullets must: complete a sentence, be front-loaded with key info, start with the same language element (all verbs, or all nouns), use correct grammar |
 | 5.25 | No negative framing | Don't lead with what the user can't do. Flag: "Don't forget to..." (→ just state the action), "You can't..." (→ rephrase positively or state what they can do), "Unfortunately..." (→ state the situation and the fix), "We're unable to..." (→ "We can't..." or state alternatives). Focus on the path forward, not the obstacle. |
 | 5.26 | No vague error language | Flag: "Something went wrong" (too vague — say what happened), "Error 404" or any error codes (users don't speak HTTP), "Request failed"/"Operation failed" (failure family — say what to do instead), "An unexpected error occurred" (meaningless to users). Every error must say what happened AND what to do next. |
+| 5.27 | Every word must earn its place | Read each sentence and ask: can I remove any word without losing meaning? Flag redundant words and tautologies. Common examples: "home delivery"→"delivery" (delivery implies home), "free of charge"→"free", "completely free"→"free", "new innovation"→"innovation", "end result"→"result", "close proximity"→"close"/"nearby", "added bonus"→"bonus", "return back"→"return", "repeat again"→"repeat", "current status"→"status", "advance booking"→"booking", "This is the total cost"→"Total cost", "in order to"→"to". If removing a word doesn't change the meaning, remove it. |
+| 5.28 | Parallel structure in lists | When listing similar items, they must follow the same grammatical structure. If one item starts with a verb, all must. If one is a noun phrase, all must. Inconsistent structure forces the reader to re-parse each item. Check every bulleted list, every set of options, every group of CTAs for parallel structure. |
 
-**Required output:** A numbered checklist (5.1 through 5.26, including 5.9a). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
+**Required output:** A numbered checklist (5.1 through 5.28, including 5.9a). Each rule must show PASS, ISSUE (with the offending text quoted), or N/A (with reason). No rule may be skipped.
 
 ---
 
@@ -501,8 +503,10 @@ Go back to the original content (not your rewrite) and explicitly re-check these
 | P2.13 | Slashes as words | Scan for "/" used to mean "or" or "and" (delivery/collection, yes/no, on/off). Must be written out. |
 | P2.14 | Negative framing | Scan for "Don't forget", "You can't", "Unfortunately", "We're unable to", "We regret". Rephrase positively. |
 | P2.15 | Condescending words | Scan for "obviously", "clearly", "of course", "basically", "as you know", "naturally", "needless to say" — in addition to "just", "only", "simply" from P2.5. |
+| P2.16 | Redundant words | Re-read every phrase. Can any word be removed without losing meaning? Check for: "home delivery", "free of charge", "completely free", "new innovation", "end result", "close proximity", "added bonus", "return back", "repeat again", "current status", "advance booking". |
+| P2.17 | Parallel structure | Re-check every list, set of options, and group of CTAs. Do all items follow the same grammatical pattern? |
 
-**Required output:** Numbered checklist P2.1-P2.15. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
+**Required output:** Numbered checklist P2.1-P2.17. Each must say CLEAR (nothing missed) or CAUGHT (with the missed issue described). If Pass 2 finds new issues, add them to the Issue Report and update the Clean Rewrite.
 
 ### Rewrite Validation
 
